@@ -1,6 +1,6 @@
 
 const deleteProductService = async() => {
 
-}
+};
 
-export default deleteProductService
+export default deleteProductService;

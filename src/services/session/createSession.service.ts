@@ -1,6 +1,6 @@
 
 const createSessionService = async() => {
 
-}
+};
 
-export default createSessionService
+export default createSessionService;

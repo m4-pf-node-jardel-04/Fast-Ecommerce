@@ -1,13 +1,13 @@
 
-import { Request, Response } from "express"
-import deleteCategoryService from "../../services/categories/deleteCategory.service"
+import { Request, Response } from "express";
+import deleteCategoryService from "../../services/categories/deleteCategory.service";
 
 
 const deleteCategoryController = async(req: Request, res:Response) => {
     
-    await deleteCategoryService()
+    await deleteCategoryService();
 
     return 
 }
 
-export default deleteCategoryController
+export default deleteCategoryController;

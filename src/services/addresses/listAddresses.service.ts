@@ -1,6 +1,6 @@
 
 const listAddressesService = async() => {
 
-}
+};
 
-export default listAddressesService
+export default listAddressesService;

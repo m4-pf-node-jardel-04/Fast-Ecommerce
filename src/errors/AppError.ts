@@ -6,7 +6,7 @@ class AppError extends Error{
         super()
         this.message = message
         this.statusCode = statusCode
-    }
-}
+    };
+};
 
-export { AppError }
+export { AppError };

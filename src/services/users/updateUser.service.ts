@@ -1,6 +1,6 @@
 
 const updateUserService = async() => {
 
-}
+};
 
-export default updateUserService
+export default updateUserService;

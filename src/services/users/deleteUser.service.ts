@@ -1,6 +1,6 @@
 
 const deleteUserService = async() => {
 
-}
+};
 
-export default deleteUserService
+export default deleteUserService;

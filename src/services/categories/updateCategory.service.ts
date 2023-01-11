@@ -1,6 +1,6 @@
 
 const updateCategoryService = async() => {
 
-}
+};
 
-export default updateCategoryService
+export default updateCategoryService;

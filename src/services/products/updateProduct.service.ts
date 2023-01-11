@@ -1,6 +1,6 @@
 
 const updateProductService = async() => {
 
-}
+};
 
-export default updateProductService
+export default updateProductService;

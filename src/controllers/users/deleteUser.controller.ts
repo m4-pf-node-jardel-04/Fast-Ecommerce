@@ -1,13 +1,13 @@
 
-import { Request, Response } from "express"
-import deleteUserService from "../../services/users/deleteUser.service"
+import { Request, Response } from "express";
+import deleteUserService from "../../services/users/deleteUser.service";
 
 
 const deleteUserController = async(req: Request, res:Response) => {
     
-    await deleteUserService()
+    await deleteUserService();
 
     return 
 }
 
-export default deleteUserController
+export default deleteUserController;

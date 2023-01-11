@@ -1,6 +1,6 @@
 
 const deleteCategoryService = async() => {
 
-}
+};
 
-export default deleteCategoryService
+export default deleteCategoryService;

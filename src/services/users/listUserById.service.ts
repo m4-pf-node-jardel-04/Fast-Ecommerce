@@ -1,6 +1,6 @@
 
 const listUserByIdService = async() => {
 
-}
+};
 
-export default listUserByIdService
+export default listUserByIdService;

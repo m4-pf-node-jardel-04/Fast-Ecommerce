@@ -1,10 +1,10 @@
-import { Router } from "express"
-import createSessionController from "../controllers/session/createSession.controller"
+import { Router } from "express";
+import createSessionController from "../controllers/session/createSession.controller";
 
 
-const sessionRoutes = Router()
+const sessionRoutes = Router();
 
-sessionRoutes.post('', createSessionController)
+sessionRoutes.post('', createSessionController);
 
 
-export default sessionRoutes
+export default sessionRoutes;

@@ -1,14 +1,14 @@
 
-import { Request, Response } from "express"
-import createAddressService from "../../services/addresses/createAddress.service"
+import { Request, Response } from "express";
+import createAddressService from "../../services/addresses/createAddress.service";
 
 
 
 const createAddressController = async(req: Request, res:Response) => {
     
-    const newAddress = await createAddressService()
+    const newAddress = await createAddressService();
 
     return
 }
 
-export default createAddressController
+export default createAddressController;

@@ -1,6 +1,6 @@
 
 const createAddressService = async() => {
 
-}
+};
 
-export default createAddressService
+export default createAddressService;

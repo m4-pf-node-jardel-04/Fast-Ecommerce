@@ -1,6 +1,6 @@
 
 const createUserService = async() => {
 
-}
+};
 
-export default createUserService
+export default createUserService;

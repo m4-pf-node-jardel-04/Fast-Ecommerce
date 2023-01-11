@@ -1,6 +1,6 @@
 
 const updateAddressService = async() => {
 
-}
+};
 
-export default updateAddressService
+export default updateAddressService;

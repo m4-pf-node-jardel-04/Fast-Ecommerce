@@ -1,6 +1,6 @@
 
 const listCategoriesService = async() => {
 
-}
+};
 
-export default listCategoriesService
+export default listCategoriesService;

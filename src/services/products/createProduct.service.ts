@@ -1,6 +1,6 @@
 
 const createProductService = async() => {
 
-}
+};
 
-export default createProductService
+export default createProductService;

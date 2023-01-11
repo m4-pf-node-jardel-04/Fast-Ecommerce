@@ -4,10 +4,10 @@ import path from "path";
 import { DataSource, DataSourceOptions } from "typeorm";
 
 const setDataSourceConfig = (): DataSourceOptions => {
-    const entitiesPath: string = path.join(__dirname, "./entities/**.{js,ts}")
-    const migrationsPath: string = path.join(__dirname, "./migrations/**.{js,ts}")
+    const entitiesPath: string = path.join(__dirname, "./entities/**.{js,ts}");
+    const migrationsPath: string = path.join(__dirname, "./migrations/**.{js,ts}");
 
-    const nodeEnv = process.env.NODE_ENV
+    const nodeEnv = process.env.NODE_ENV;
 
     if(nodeEnv === "production"){
         return{
@@ -16,7 +16,7 @@ const setDataSourceConfig = (): DataSourceOptions => {
             entities: [entitiesPath],
             migrations: [migrationsPath]
         }
-    }
+    };
 
     if(nodeEnv === "test"){
         return{
@@ -25,7 +25,7 @@ const setDataSourceConfig = (): DataSourceOptions => {
             synchronize: true,
             entities: [entitiesPath]
         }
-    }
+    };
 
     return {
         type: "postgres",
@@ -38,9 +38,9 @@ const setDataSourceConfig = (): DataSourceOptions => {
         logging: true,
         entities: [entitiesPath],
         migrations: [migrationsPath]
-    }
-}
+    };
+};
 
-const dataSourceConfig = setDataSourceConfig()
+const dataSourceConfig = setDataSourceConfig();
 
-export default new DataSource(dataSourceConfig)
+export default new DataSource(dataSourceConfig);

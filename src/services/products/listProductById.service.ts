@@ -1,6 +1,6 @@
 
 const listProductByIdService = async() => {
 
-}
+};
 
-export default listProductByIdService
+export default listProductByIdService;

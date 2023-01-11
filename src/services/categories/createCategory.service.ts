@@ -1,6 +1,6 @@
 
 const createCategoryService = async() => {
 
-}
+};
 
-export default createCategoryService
+export default createCategoryService;

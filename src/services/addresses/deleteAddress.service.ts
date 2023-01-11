@@ -1,6 +1,6 @@
 
 const deleteAddressService = async() => {
 
-}
+};
 
-export default deleteAddressService
+export default deleteAddressService;
