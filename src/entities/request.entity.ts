@@ -4,11 +4,13 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
-import { User } from "./user.entity";
+import ProcuctToRequest from "./productToRequest.entity";
+import  User  from "./user.entity";
 
 @Entity("request")
-export class Request {
+class Request {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -24,4 +26,9 @@ export class Request {
   @ManyToOne(() => User, (user) => user.request, { nullable: true })
   @JoinColumn()
   user: User;
-}
+
+  @OneToMany(() => ProcuctToRequest, productTorequest => productTorequest.request)
+  productTorequest: ProcuctToRequest[]
+};
+
+export default Request

@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
-import { User } from "./user.entity";
+import User from "./user.entity";
 
 @Entity("addresses")
-export class Addresses {
+class Address {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   nickname: string;
 
   @Column({ length: 50 })
@@ -18,7 +18,7 @@ export class Addresses {
   @Column({ length: 10 })
   number: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   complement: string;
 
   @Column({ length: 50 })
@@ -29,4 +29,6 @@ export class Addresses {
 
   @OneToOne(() => User)
   user: User;
-}
+};
+
+export default Address;

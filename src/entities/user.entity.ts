@@ -12,11 +12,11 @@ import {
   DeleteDateColumn,
   OneToOne,
 } from "typeorm";
-import { Addresses } from "./addresses.entity";
-import { Request } from "./request.entity";
+import Address  from "./addresses.entity";
+import  Request from "./request.entity";
 
 @Entity("users")
-export class User {
+class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -29,7 +29,7 @@ export class User {
   @Column({ length: 50 })
   password: string;
 
-  @Column()
+  @Column({ default: false })
   isAdm: boolean;
 
   @CreateDateColumn()
@@ -50,10 +50,12 @@ export class User {
     }
   }
 
-  @OneToOne(() => Addresses, { eager: true })
+  @OneToOne(() => Address, { eager: true })
   @JoinColumn()
-  address: Addresses;
+  address: Address;
 
   @OneToMany(() => Request, (request) => request.user, { eager: true })
-  request: Request;
-}
+  request: Request[];
+};
+
+export default User;
