@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import createSessionService from "../../services/session/createSession.service";
+import createSessionService from "../services/session/createSession.service";
 
 
 const createSessionController = async(req: Request, res:Response) => {
@@ -10,4 +10,4 @@ const createSessionController = async(req: Request, res:Response) => {
     return
 }
 
-export default createSessionController;
+export  { createSessionController };
