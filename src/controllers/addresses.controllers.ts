@@ -7,7 +7,7 @@ import { IAddressRequest } from "../interfaces/address.interfaces";
 
 const createAddressController = async (req: Request, res: Response) => {
   const addressData: IAddressRequest = req.body;
-  const newAddress = await createAddressService(addressData);
+  const newAddress = await createAddressService(addressData, req.user.id);
 
   return res.status(201).json(newAddress);
 };
