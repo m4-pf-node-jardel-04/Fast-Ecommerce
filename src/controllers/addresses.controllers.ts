@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import createAddressService from "../services/addresses/createAddress.service";
 import deleteAddressService from "../services/addresses/deleteAddress.service";
 import listAddressesService from "../services/addresses/listAddresses.service";
+import listAddressByUserService from "../services/addresses/listAddressByUser.service";
 import updateAddressService from "../services/addresses/updateAddress.service";
 import { IAddressRequest } from "../interfaces/address.interfaces";
 
@@ -24,6 +25,12 @@ const listAddressesController = async (req: Request, res: Response) => {
   return res.status(200).json(addresses);
 };
 
+const listAddressByUserController = async (req: Request, res: Response) => {
+  const addressByUserId = await listAddressByUserService(req.params.id);
+
+  return res.status(200).json(addressByUserId);
+};
+
 const updateAddressController = async (req: Request, res: Response) => {
   const updateAddress = await updateAddressService();
 
@@ -34,5 +41,6 @@ export {
   createAddressController,
   deleteAddressController,
   listAddressesController,
+  listAddressByUserController,
   updateAddressController,
 };

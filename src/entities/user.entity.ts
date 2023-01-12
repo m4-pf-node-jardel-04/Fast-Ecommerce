@@ -12,8 +12,8 @@ import {
   DeleteDateColumn,
   OneToOne,
 } from "typeorm";
-import Address  from "./addresses.entity";
-import  Request from "./request.entity";
+import Address from "./addresses.entity";
+import Request from "./request.entity";
 
 @Entity("users")
 class User {
@@ -24,7 +24,7 @@ class User {
   name: string;
 
   @Column({ length: 50, unique: true })
-  email: String;
+  email: string;
 
   @Column({ length: 50 })
   password: string;
@@ -56,6 +56,6 @@ class User {
 
   @OneToMany(() => Request, (request) => request.user, { eager: true })
   request: Request[];
-};
+}
 
 export default User;
