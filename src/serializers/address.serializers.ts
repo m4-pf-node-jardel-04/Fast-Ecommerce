@@ -2,10 +2,6 @@ import * as yup from "yup";
 import { SchemaOf } from "yup";
 import { IAddressRequest, IAddress } from "../interfaces/address.interfaces";
 
-function transformToLowerCase(value: string) {
-  return this.isType(value) && value !== null ? value.toLowerCase() : value;
-}
-
 const addressSerializer: SchemaOf<IAddressRequest> = yup.object().shape({
   nickname: yup.string().max(50).required(),
   district: yup.string().max(50).required(),
@@ -13,7 +9,7 @@ const addressSerializer: SchemaOf<IAddressRequest> = yup.object().shape({
   number: yup.number().max(10),
   complement: yup.string().max(50),
   city: yup.string().max(50).required(),
-  state: yup.string().min(2).max(2).transform(transformToLowerCase).required(),
+  state: yup.string().min(2).max(2).lowercase().required(),
 });
 
 const adressWithIdSerializer: SchemaOf<IAddress> = yup.object().shape({
