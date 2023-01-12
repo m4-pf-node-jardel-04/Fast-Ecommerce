@@ -1,39 +1,38 @@
-
 import { Request, Response } from "express";
 import createAddressService from "../services/addresses/createAddress.service";
 import deleteAddressService from "../services/addresses/deleteAddress.service";
 import listAddressesService from "../services/addresses/listAddresses.service";
 import updateAddressService from "../services/addresses/updateAddress.service";
+import { IAddressRequest } from "../interfaces/address.interfaces";
 
+const createAddressController = async (req: Request, res: Response) => {
+  const addressData: IAddressRequest = req.body;
+  const newAddress = await createAddressService(addressData);
 
-const createAddressController = async(req: Request, res:Response) => {
-    
-    const newAddress = await createAddressService();
+  return res.status(201).json(newAddress);
+};
 
-    return
-}
+const deleteAddressController = async (req: Request, res: Response) => {
+  await deleteAddressService();
 
-const deleteAddressController = async(req: Request, res:Response) => {
-    
-    await deleteAddressService();
+  return;
+};
 
-    return 
-}
+const listAddressesController = async (req: Request, res: Response) => {
+  const addresses = await listAddressesService();
 
-const listAddressesController = async(req: Request, res:Response) => {
-    
-    const addresses = await listAddressesService();
+  return;
+};
 
-    return ;
-}
+const updateAddressController = async (req: Request, res: Response) => {
+  const updateAddress = await updateAddressService();
 
-const updateAddressController = async(req: Request, res:Response) => {
-    
-    const updateAddress = await updateAddressService();
+  return;
+};
 
-    return 
-}
-
-
-
-export { createAddressController, deleteAddressController, listAddressesController, updateAddressController,  }
+export {
+  createAddressController,
+  deleteAddressController,
+  listAddressesController,
+  updateAddressController,
+};

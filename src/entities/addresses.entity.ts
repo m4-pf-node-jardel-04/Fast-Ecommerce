@@ -15,8 +15,8 @@ class Address {
   @Column({ length: 8 })
   zipCode: string;
 
-  @Column({ length: 10 })
-  number: string;
+  @Column({ length: 10, nullable: true })
+  number: number;
 
   @Column({ length: 50, nullable: true })
   complement: string;
@@ -29,6 +29,6 @@ class Address {
 
   @OneToOne(() => User)
   user: User;
-};
+}
 
 export default Address;
