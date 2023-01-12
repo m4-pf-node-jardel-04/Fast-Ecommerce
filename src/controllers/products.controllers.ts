@@ -1,43 +1,34 @@
 import { Request, Response } from "express";
+import { IProductsRequest, IProductsUpdate } from "../interfaces/product.interfaces";
 import createProductService from "../services/products/createProduct.service";
 import deleteProductService from "../services/products/deleteProduct.service";
-import listProductByIdService from "../services/products/listProductById.service";
 import listProductsService from "../services/products/listProducts.service";
 import updateProductService from "../services/products/updateProduct.service";
 
 const createProductController = async(req: Request, res:Response) => {
-    
-    const newProduct = await createProductService();
-
-    return
+    const values: IProductsRequest = req.body
+    const [status, createProduct] = await createProductService(values)
+    return res.status(status as number).json(createProduct);
 }
 
 const deleteProductController = async(req: Request, res:Response) => {
+    await deleteProductService(req.params.id)
+    return res.status(204).send()
     
-    await deleteProductService();
-
-    return 
-}
-
-const listProductByIdController = async(req: Request, res:Response) => {
-    
-    const product = await listProductByIdService();
-
-    return 
 }
 
 const listProductsController = async(req: Request, res:Response) => {
-    
-    const products = await listProductsService();
-
-    return 
+    const products = await listProductsService()
+    return res.json(products);
 }
 
 const updateProductController = async(req: Request, res:Response) => {
-    
-    const updateProduct = await updateProductService();
-
-    return 
+    const productData: IProductsUpdate = req.body
+    const productId = req.params.id
+    const updateProduct = await updateProductService(productData,productId);
+    return res.status(201).json(updateProduct)
 }
 
-export { createProductController, deleteProductController, listProductByIdController, listProductsController, updateProductController }
+
+
+export { createProductController, deleteProductController, listProductsController, updateProductController }
