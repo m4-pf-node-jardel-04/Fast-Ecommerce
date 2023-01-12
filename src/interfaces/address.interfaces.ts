@@ -18,3 +18,13 @@ export interface IAddress {
   city: string;
   state: string;
 }
+
+export interface IAddressUpdate {
+  nickname?: string;
+  district?: string;
+  zipCode?: string;
+  number?: number;
+  complement?: string;
+  city?: string;
+  state?: string;
+}

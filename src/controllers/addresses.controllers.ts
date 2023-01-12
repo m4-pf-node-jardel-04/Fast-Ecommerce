@@ -4,7 +4,10 @@ import deleteAddressService from "../services/addresses/deleteAddress.service";
 import listAddressesService from "../services/addresses/listAddresses.service";
 import listAddressByUserService from "../services/addresses/listAddressByUser.service";
 import updateAddressService from "../services/addresses/updateAddress.service";
-import { IAddressRequest } from "../interfaces/address.interfaces";
+import {
+  IAddressRequest,
+  IAddressUpdate,
+} from "../interfaces/address.interfaces";
 
 const createAddressController = async (req: Request, res: Response) => {
   const addressData: IAddressRequest = req.body;
@@ -32,9 +35,11 @@ const listAddressByUserController = async (req: Request, res: Response) => {
 };
 
 const updateAddressController = async (req: Request, res: Response) => {
-  const updateAddress = await updateAddressService();
+  const addressData: IAddressUpdate = req.body;
+  const addressId = req.params.id;
+  const updateAddress = await updateAddressService(addressData, addressId);
 
-  return;
+  return res.status(201).json(updateAddress);
 };
 
 export {
