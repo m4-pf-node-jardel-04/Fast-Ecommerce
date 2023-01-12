@@ -4,6 +4,7 @@ import handleError from "./errors/handleError";
 import addressRoutes from "./routes/addresses.routes";
 import categoryRoutes from "./routes/categories.routes";
 import productRoutes from "./routes/products.routes";
+import requestsRoutes from "./routes/requests.routes";
 import sessionRoutes from "./routes/session.routes";
 import userRoutes from "./routes/users.routes";
 
@@ -16,6 +17,7 @@ app.use("/sign", sessionRoutes);
 app.use("/addresses", addressRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
+app.use("/requests", requestsRoutes);
 
 app.use(handleError);
 
