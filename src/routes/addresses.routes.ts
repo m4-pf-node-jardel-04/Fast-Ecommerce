@@ -44,6 +44,11 @@ addressRoutes.patch(
   ensureDataIsValidMiddleware(updateAdressSerializer),
   updateAddressController
 );
-addressRoutes.delete("/:id", deleteAddressController);
+addressRoutes.delete(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureAdmOrUserMiddleware,
+  deleteAddressController
+);
 
 export default addressRoutes;

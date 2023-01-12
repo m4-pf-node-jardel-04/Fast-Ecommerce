@@ -17,9 +17,9 @@ const createAddressController = async (req: Request, res: Response) => {
 };
 
 const deleteAddressController = async (req: Request, res: Response) => {
-  await deleteAddressService();
+  await deleteAddressService(req.params.id);
 
-  return;
+  return res.status(204).send();
 };
 
 const listAddressesController = async (req: Request, res: Response) => {
