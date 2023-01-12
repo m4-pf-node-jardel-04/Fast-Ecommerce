@@ -21,7 +21,7 @@ const deleteAddressController = async (req: Request, res: Response) => {
 const listAddressesController = async (req: Request, res: Response) => {
   const addresses = await listAddressesService();
 
-  return;
+  return res.status(200).json(addresses);
 };
 
 const updateAddressController = async (req: Request, res: Response) => {

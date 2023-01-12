@@ -7,6 +7,7 @@ import {
 } from "../controllers/addresses.controllers";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
+import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleare";
 import { addressSerializer } from "../serializers/address.serializers";
 
 const addressRoutes = Router();
@@ -17,7 +18,12 @@ addressRoutes.post(
   ensureDataIsValidMiddleware(addressSerializer),
   createAddressController
 );
-addressRoutes.get("", listAddressesController);
+addressRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensureAdminMiddleare,
+  listAddressesController
+);
 addressRoutes.patch("/:id", updateAddressController);
 addressRoutes.delete("/:id", deleteAddressController);
 
