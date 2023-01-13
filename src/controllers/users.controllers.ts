@@ -47,11 +47,8 @@ const updateUserController = async(req: Request, res:Response) => {
 const deleteUserController = async (req: Request, res: Response) => {
     const userId: string = req.params.id
     const userAuth: string = req.user.id
-    try {
-        await deleteUserService(userId, userAuth)
-    } catch (error) {
-        console.log(error)
-    }
+
+    await deleteUserService(userId, userAuth)
     return res.status(204).send()
 }
 
