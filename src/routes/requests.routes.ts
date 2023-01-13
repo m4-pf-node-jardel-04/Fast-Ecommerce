@@ -12,7 +12,7 @@ import {
   listRequestByIdController,
   updateRequestController,
 } from "../controllers/requests.controllers";
-import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleare";
+import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleware";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
 import ensureRequestExistsMiddleware from "../middlewares/ensureRequestExists.middleware";

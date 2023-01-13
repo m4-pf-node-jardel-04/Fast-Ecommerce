@@ -37,9 +37,9 @@ const loginUserService = async ({
       console.log(foundUser.password)
       console.log(passwordMatch)
     
-      // if (!passwordMatch) {
-      //   throw new AppError("Wrong email or password.", 403)
-      // }
+      if (!passwordMatch) {
+        throw new AppError("Wrong email or password.", 403)
+      }
     
       const token = Jwt.sign(
         { isAdm: foundUser.isAdm },

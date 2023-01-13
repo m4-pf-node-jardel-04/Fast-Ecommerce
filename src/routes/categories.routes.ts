@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createCategoryController, deleteCategoryController, listCategoriesController, listProductsInCategoryController, updateCategoryController } from "../controllers/categories.controllers";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
-import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleare"
+import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleware"
 import { categoryRequestSerializer } from "../serializers/category.serializers";
 
 

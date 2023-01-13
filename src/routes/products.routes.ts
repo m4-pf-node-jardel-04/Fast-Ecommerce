@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createProductController, deleteProductController, listProductsController, updateProductController } from "../controllers/products.controllers";
-import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleare";
+import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleware";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
 import { createProductRequestSerializer, updateProductSerializer } from "../serializers/product.serializers";

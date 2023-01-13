@@ -8,7 +8,7 @@ import {
 } from "../controllers/addresses.controllers";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
-import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleare";
+import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleware";
 import ensureAdmOrUserMiddleware from "../middlewares/ensureAdmOrUser.middleware";
 import ensureFieldsAddresMiddleware from "../middlewares/ensureFieldsAddress.middleware";
 import {
