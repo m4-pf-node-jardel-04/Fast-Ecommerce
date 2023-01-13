@@ -24,7 +24,7 @@ const createUserService = async (
 
   const createUser = userRepository.create(userData);
 
-  await userRepository.save({...createUser });
+  await userRepository.save(createUser);
 
   const createdUserResponse = await userResponseSerializer.validate(
     createUser,
