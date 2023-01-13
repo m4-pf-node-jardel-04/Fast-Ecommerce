@@ -12,6 +12,7 @@ import {
   DeleteDateColumn,
   OneToOne,
 } from "typeorm";
+import { date } from "yup";
 import Address  from "./addresses.entity";
 import  Request from "./request.entity";
 
@@ -24,13 +25,16 @@ class User {
   name: string;
 
   @Column({ length: 50, unique: true })
-  email: String;
+  email: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 120 })
   password: string;
 
   @Column({ default: false })
   isAdm: boolean;
+
+  @Column({ default: true })
+    isActive: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -38,8 +42,8 @@ class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
-  deletedeAt: Date;
+  // @DeleteDateColumn({default: undefined})
+  // deletedAt: Date;
 
   @BeforeUpdate()
   @BeforeInsert()
