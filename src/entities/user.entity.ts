@@ -33,7 +33,7 @@ class User {
   isAdm: boolean;
 
   @Column({ default: true })
-    isActive: boolean;
+  isActive: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -58,5 +58,4 @@ class User {
     }
   }
 }
-
 export default User;
