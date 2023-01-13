@@ -34,7 +34,7 @@ const updateAdressSerializer: SchemaOf<IAddressUpdate> = yup.object().shape({
   number: yup.number().max(10).notRequired(),
   complement: yup.string().max(50).notRequired(),
   city: yup.string().max(50).notRequired(),
-  state: yup.string().min(2).max(2).notRequired(),
+  state: yup.string().min(2).max(2).lowercase().notRequired(),
 });
 
 const returnedAddressDataSerializer = yup.array(adressWithIdSerializer);

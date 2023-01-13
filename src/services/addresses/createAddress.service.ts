@@ -18,6 +18,10 @@ const createAddressService = async (
     id: userId,
   });
 
+  if (!idUser) {
+    throw new AppError("User not exists", 404);
+  }
+
   if (userAddress) {
     throw new AppError("Address already create", 409);
   }
