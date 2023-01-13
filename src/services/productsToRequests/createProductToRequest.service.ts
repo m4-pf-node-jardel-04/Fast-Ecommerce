@@ -33,6 +33,10 @@ const createProductToRequestService = async (
     throw new AppError("Product not found", 404);
   }
 
+  if (productData.quantity > product.quantity) {
+    throw new AppError("insufficient product stock", 409);
+  }
+
   productData.value = productData.quantity * product.price;
 
   const productToRequest = productsToRequestsRepository.create({
@@ -41,6 +45,11 @@ const createProductToRequestService = async (
     product: product,
   });
   await productsToRequestsRepository.save(productToRequest);
+
+  await productsRepository.update(
+    { id: product.id },
+    { quantity: product.quantity - productData.quantity }
+  );
 
   const totalValue: number = await requestsRepository
     .createQueryBuilder("requests")

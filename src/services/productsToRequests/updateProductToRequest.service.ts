@@ -39,6 +39,22 @@ const updateProductToRequestService = async (
 
   const product = await productsRepository.findOneBy({ id: productId });
 
+  if (findProduct.quantity > updatedData.quantity) {
+    const diference = findProduct.quantity - updatedData.quantity;
+    await productsRepository.update(
+      { id: product.id },
+      { quantity: product.quantity + diference }
+    );
+  }
+
+  if (findProduct.quantity < updatedData.quantity) {
+    const diference = updatedData.quantity - findProduct.quantity;
+    await productsRepository.update(
+      { id: product.id },
+      { quantity: product.quantity - diference }
+    );
+  }
+
   updatedData.value = updatedData.quantity * product.price;
 
   const updatedProduct = await productsToRequestsRepository.update(

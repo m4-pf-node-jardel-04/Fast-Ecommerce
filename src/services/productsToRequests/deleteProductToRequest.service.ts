@@ -2,6 +2,7 @@ import AppDataSource from "../../data-source";
 import Request from "../../entities/request.entity";
 import ProductToRequest from "../../entities/productToRequest.entity";
 import { AppError } from "../../errors/AppError";
+import Product from "../../entities/products.entity";
 
 const deleteProductToRequestService = async (
   requestId: string,
@@ -11,6 +12,7 @@ const deleteProductToRequestService = async (
   const requestsRepository = AppDataSource.getRepository(Request);
   const productsToRequestsRepository =
     AppDataSource.getRepository(ProductToRequest);
+  const productRepository = AppDataSource.getRepository(Product);
 
   const request = await requestsRepository.findOneBy({ id: requestId });
 
@@ -31,6 +33,13 @@ const deleteProductToRequestService = async (
   if (!findProduct) {
     throw new AppError("Product not found on request", 404);
   }
+
+  const product = await productRepository.findOneBy({ id: productId });
+
+  await productRepository.update(
+    { id: product.id },
+    { quantity: product.quantity + findProduct.quantity }
+  );
 
   await productsToRequestsRepository.delete({ id: findProduct.id });
 
