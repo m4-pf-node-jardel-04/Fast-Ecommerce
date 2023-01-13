@@ -5,6 +5,14 @@ import {
   listProductsToRequestController,
   updateProductToRequestController,
 } from "../controllers/productsToRequests.controllers";
+import {
+  createRequestController,
+  deleteRequestController,
+  listAllRequestsController,
+  listRequestByIdController,
+  updateRequestController,
+} from "../controllers/requests.controllers";
+import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleare";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
 import ensureRequestExistsMiddleware from "../middlewares/ensureRequestExists.middleware";
@@ -14,6 +22,36 @@ import {
 } from "../serializers/requests.serializers";
 
 const requestsRoutes = Router();
+
+requestsRoutes.post("", ensureAuthMiddleware, createRequestController);
+
+requestsRoutes.get(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureRequestExistsMiddleware,
+  listRequestByIdController
+);
+
+requestsRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensureAdminMiddleare,
+  listAllRequestsController
+);
+
+requestsRoutes.patch(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureRequestExistsMiddleware,
+  updateRequestController
+);
+
+requestsRoutes.delete(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureRequestExistsMiddleware,
+  deleteRequestController
+);
 
 requestsRoutes.post(
   "/:id/products",

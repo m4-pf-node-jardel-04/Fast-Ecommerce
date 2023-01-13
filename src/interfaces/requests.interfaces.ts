@@ -8,3 +8,7 @@ export interface IUpdateProductToRequest {
   quantity: number;
   value?: number;
 }
+
+export interface ICreateRequest {
+  status: string;
+}
