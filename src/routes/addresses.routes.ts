@@ -47,7 +47,7 @@ addressRoutes.patch(
 addressRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
-  ensureAdmOrUserMiddleware,
+  // ensureAdmOrUserMiddleware,
   deleteAddressController
 );
 
