@@ -22,24 +22,18 @@ const createUserService = async (
     throw new AppError("User already exists.", 409);
   }
 
-    const createWithoutExtraData = await userRequestSerializer.validate(
-      userData,
-      {
-        stripUnknown: true,
-      }
-    );
+  const createUser = userRepository.create(userData);
 
-    const createUser = userRepository.create(createWithoutExtraData);
+  await userRepository.save({...createUser });
 
-    await userRepository.save({...createUser, deletedAt: new Date()});
-
-    const createdUserResponse = await userResponseSerializer.validate(
-      createUser,
-      {
-        stripUnknown: true,
-      },
-    );
-    return createdUserResponse;
+  const createdUserResponse = await userResponseSerializer.validate(
+    createUser,
+    {
+      stripUnknown: true,
+    },
+  );
+  
+  return createdUserResponse;
   
 };
 
