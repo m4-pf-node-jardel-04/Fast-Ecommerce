@@ -14,3 +14,12 @@ export interface IProductsUpdate {
   image: string;
   quantity: number;
 }
+
+export interface IProductsResponse {
+  name: string;
+  id: string
+  price: number;
+  description: string;
+  image: string;
+  quantity: number;
+}

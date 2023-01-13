@@ -10,7 +10,7 @@ const updateCategoryService = async(datacategory: ICategoryRequest, IdCategory:s
     const category = await categoryRepository.findOneBy({id: IdCategory})
 
     if(!category){
-        throw new AppError('Category not exists', 404)
+        throw new AppError("Category not exists", 404)
     }
 
     const updateCategory = categoryRepository.create({
