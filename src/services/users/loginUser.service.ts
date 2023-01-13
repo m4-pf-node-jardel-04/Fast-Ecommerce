@@ -1,16 +1,16 @@
-import { IUserLogin } from '../../interfaces/user.interfaces';
+import { IUserLogin } from "../../interfaces/user.interfaces";
 
-import AppDataSource from '../../data-source'
+import AppDataSource from "../../data-source";
 
 import { compare } from "bcryptjs";
 
-import "dotenv/config"
+import "dotenv/config";
 
 import Jwt from "jsonwebtoken";
 
 import { AppError } from "../../errors/AppError";
 
-import User from '../../entities/user.entity';
+import User from "../../entities/user.entity";
 
 const loginUserService = async ({
     email,

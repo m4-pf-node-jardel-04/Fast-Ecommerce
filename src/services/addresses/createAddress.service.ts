@@ -10,10 +10,6 @@ const createAddressService = async (
 ): Promise<IAddress> => {
   const userRepo = dataSource.getRepository(User);
 
-  const userAddress = await userRepo.findOneBy({
-    address: addressData,
-  });
-
   const idUser = await userRepo.findOneBy({
     id: userId,
   });
@@ -22,14 +18,16 @@ const createAddressService = async (
     throw new AppError("User not exists", 404);
   }
 
-  if (userAddress) {
+  if (idUser.address) {
     throw new AppError("Address already create", 409);
   }
 
   const addressRepo = dataSource.getRepository(Address);
 
-  const createdAddress = addressRepo.create({ ...addressData, user: idUser });
+  const createdAddress = addressRepo.create(addressData);
   await addressRepo.save(createdAddress);
+
+  await userRepo.update({ id: userId }, { address: createdAddress });
 
   return createdAddress;
 };
