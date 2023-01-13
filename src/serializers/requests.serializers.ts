@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { SchemaOf } from "yup";
 import {
   ICreateProductToRequest,
+  ICreateRequest,
   IUpdateProductToRequest,
 } from "../interfaces/requests.interfaces";
 
@@ -18,7 +19,17 @@ const updateProductToRequestsRequestSerializer: SchemaOf<IUpdateProductToRequest
     value: yup.number(),
   });
 
+const createRequestSerializer: SchemaOf<ICreateRequest> = yup.object().shape({
+  status: yup
+    .string()
+    .transform((status) => {
+      status = "finalizado";
+    })
+    .required(),
+});
+
 export {
   createProductToRequestsRequestSerializer,
   updateProductToRequestsRequestSerializer,
+  createRequestSerializer,
 };
