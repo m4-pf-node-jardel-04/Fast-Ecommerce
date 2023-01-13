@@ -9,7 +9,6 @@ import {
   JoinColumn,
   BeforeInsert,
   BeforeUpdate,
-  DeleteDateColumn,
   OneToOne,
 } from "typeorm";
 import Address  from "./addresses.entity";
@@ -43,21 +42,21 @@ class User {
   updatedAt: Date;
 
 
-  @BeforeUpdate()
-  @BeforeInsert()
-  hashPassword() {
-    const isHashed = getRounds(this.password);
-    if (!isHashed) {
-      this.password = hashSync(this.password, 10);
-    }
-  }
-
   @OneToOne(() => Address, { eager: true })
   @JoinColumn()
   address: Address;
 
   @OneToMany(() => Request, (request) => request.user, { eager: true })
   request: Request[];
+
+  @BeforeUpdate()
+  @BeforeInsert()
+  hashPassword(){
+    const isEncrypted = getRounds(this.password)
+    if(!isEncrypted){
+      this.password = hashSync(this.password, 10)
+    }
+  }
 }
 
 export default User;

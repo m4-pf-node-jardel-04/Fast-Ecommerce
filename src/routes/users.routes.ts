@@ -16,7 +16,6 @@ userRoutes.patch('/:id', ensureAuthMiddleware, updateUserController);
 userRoutes.delete('/:id', ensureAuthMiddleware, deleteUserController);
 userRoutes.get('/:id', ensureAuthMiddleware, listUserByIdController);
 
-//loginRoutes.post('', ensureDataIsValidMiddleware(userLoginSerializer), loginUserController)
 
 
 export default userRoutes;
