@@ -11,9 +11,8 @@ import {
   BeforeUpdate,
   OneToOne,
 } from "typeorm";
-import Address  from "./addresses.entity";
-import  Request from "./request.entity";
-
+import Address from "./addresses.entity";
+import Request from "./request.entity";
 
 @Entity("users")
 class User {
@@ -33,14 +32,13 @@ class User {
   isAdm: boolean;
 
   @Column({ default: true })
-    isActive: boolean;
+  isActive: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
 
   @OneToOne(() => Address, { eager: true })
   @JoinColumn()
@@ -51,10 +49,10 @@ class User {
 
   @BeforeUpdate()
   @BeforeInsert()
-  hashPassword(){
-    const isEncrypted = getRounds(this.password)
-    if(!isEncrypted){
-      this.password = hashSync(this.password, 10)
+  hashPassword() {
+    const isEncrypted = getRounds(this.password);
+    if (!isEncrypted) {
+      this.password = hashSync(this.password, 10);
     }
   }
 }
