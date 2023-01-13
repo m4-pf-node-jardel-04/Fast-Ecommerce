@@ -2,8 +2,9 @@ import Category from "../../entities/categories.entity";
 import AppDataSource from "../../data-source";
 import { AppError } from "../../errors/AppError";
 import { productsInCategoryResponseSerializer } from "../../serializers/category.serializers";
+import { IproductsInCategoryResponse } from "../../interfaces/category.interfaces";
 
-const listProductsInCategoryService = async(IdCategory: string) => {
+const listProductsInCategoryService = async(IdCategory: string): Promise<IproductsInCategoryResponse> => {
     const categoryRepository = AppDataSource.getRepository(Category);
 
     const categoryExist = await categoryRepository.findOneBy({id: IdCategory});

@@ -5,10 +5,9 @@ import { userResponseSerializerArray } from '../../serializers/user.serializers'
 
 const listUsersService = async (): Promise<IUserResponse[]> => {
 
-    const userRepository = AppDataSource.getRepository(User)
+  const userRepository = AppDataSource.getRepository(User)
 
-    const users = await userRepository.find()
-    console.log(users)
+  const users = await userRepository.find()
 
   const userResponseArray = userResponseSerializerArray.validate(users, {
     stripUnknown: true,
