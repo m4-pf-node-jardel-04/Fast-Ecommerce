@@ -28,11 +28,10 @@ const createAddressService = async (
 
   const addressRepo = dataSource.getRepository(Address);
 
-  const createdAddress = addressRepo.create({ ...addressData, user: idUser });
+  const createdAddress = addressRepo.create(addressData);
   await addressRepo.save(createdAddress);
 
-  // const putAddressInUser = userRepo.create({ address: createdAddress });
-  // await userRepo.save(putAddressInUser);
+  await userRepo.update({ id: userId }, { address: createdAddress });
 
   return createdAddress;
 };
