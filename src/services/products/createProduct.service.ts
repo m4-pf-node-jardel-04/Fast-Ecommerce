@@ -14,8 +14,16 @@ const createProductService = async ({name,price,description,image,quantity,categ
         id:categoryId
     })
 
+    const productExists = await productsRepository.findOneBy({
+        name
+    })
+    
     if (!categoryExists) {
         throw new AppError ("category does not exist", 404)
+    }
+    
+    if(productExists){
+        throw new AppError ("Product already created", 409)
     }
 
     const products = productsRepository.create({category:categoryExists, name, price, description, image, quantity})

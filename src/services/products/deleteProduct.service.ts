@@ -7,6 +7,7 @@ const deleteProductService = async (productId: string):Promise<void> => {
   const product = await productsRepository.findOneBy({
     id: productId,
   });
+
   if (!product) {
     throw new AppError("Product not found", 404);
   }
