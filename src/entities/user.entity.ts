@@ -12,9 +12,9 @@ import {
   DeleteDateColumn,
   OneToOne,
 } from "typeorm";
-import { date } from "yup";
 import Address  from "./addresses.entity";
 import  Request from "./request.entity";
+
 
 @Entity("users")
 class User {
@@ -42,8 +42,6 @@ class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // @DeleteDateColumn({default: undefined})
-  // deletedAt: Date;
 
   @BeforeUpdate()
   @BeforeInsert()
@@ -60,6 +58,6 @@ class User {
 
   @OneToMany(() => Request, (request) => request.user, { eager: true })
   request: Request[];
-};
+}
 
 export default User;
