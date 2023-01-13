@@ -1,4 +1,5 @@
 import Product from "../entities/products.entity"
+import { IProductsResponse } from "./product.interfaces"
 
 interface ICategoryRequest {
     name: string
@@ -12,7 +13,7 @@ interface ICategoryResponse {
 interface IproductsInCategoryResponse{
     id: string
     name: string
-    product: Array<Product>
+    product: Array<IProductsResponse>
 }
 
 export { ICategoryRequest, ICategoryResponse, IproductsInCategoryResponse }
