@@ -31,6 +31,9 @@ const createAddressService = async (
   const createdAddress = addressRepo.create({ ...addressData, user: idUser });
   await addressRepo.save(createdAddress);
 
+  // const putAddressInUser = userRepo.create({ address: createdAddress });
+  // await userRepo.save(putAddressInUser);
+
   return createdAddress;
 };
 

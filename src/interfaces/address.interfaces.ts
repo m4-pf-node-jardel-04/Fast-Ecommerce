@@ -1,3 +1,4 @@
+import { IUserResponse } from "./user.interfaces";
 export interface IAddressRequest {
   nickname: string;
   district: string;
@@ -6,6 +7,7 @@ export interface IAddressRequest {
   complement?: string;
   city: string;
   state: string;
+  user: IUserResponse;
 }
 
 export interface IAddress {
@@ -17,6 +19,7 @@ export interface IAddress {
   complement?: string;
   city: string;
   state: string;
+  user: IUserResponse;
 }
 
 export interface IAddressUpdate {
