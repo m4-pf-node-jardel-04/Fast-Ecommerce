@@ -4,7 +4,7 @@ import User from "../entities/user.entity";
 import "dotenv/config";
 import dataSource from "../data-source";
 
-const ensureAdmOrUserMiddleware = async (
+const ensureListOrEditAddressMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -21,4 +21,4 @@ const ensureAdmOrUserMiddleware = async (
   return next();
 };
 
-export default ensureAdmOrUserMiddleware;
+export default ensureListOrEditAddressMiddleware;
