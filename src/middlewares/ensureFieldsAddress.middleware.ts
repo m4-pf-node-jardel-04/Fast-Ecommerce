@@ -6,7 +6,12 @@ const ensureFieldsAddresMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.body.id || req.body.id === false) {
+  if (
+    req.body.id ||
+    req.body.id === false ||
+    req.body.user ||
+    req.body.user === false
+  ) {
     throw new AppError("You dont have authorization for this field", 401);
   }
 
