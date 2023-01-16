@@ -4,29 +4,28 @@ import User from '../../entities/user.entity'
 import { userResponseSerializer } from '../../serializers/user.serializers'
 import { AppError } from '../../errors/AppError'
 
-const updateUserService = async (userData: IUserUpdateRequest, userId: string, userAuth: string): Promise<IUserResponse> => {
+const updateUserService = async (userData: IUserUpdateRequest, userId: string): Promise<IUserResponse> => {
 
     const userRepository = AppDataSource.getRepository(User)
     
      const foundUserByParam = await userRepository.findOneBy({id:userId})
-    const foundUserByAuth = await userRepository.findOneBy({id:userAuth})
+
 
     if (!foundUserByParam) {
         throw new AppError("User not found.", 404)
     }
 
-    if (foundUserByAuth.isAdm === false) {
-        if ( foundUserByAuth.id !== foundUserByParam.id) {
-            throw new AppError("User does not have the necessary credentials. Admin permission needed.", 403);
-        }
+    const {name, email, password} = userData
 
-    if (userData.hasOwnProperty('isAdm') || userData.hasOwnProperty('id')){
-        throw new AppError("Invalid data.", 403);
+    if(!name && !email && !password){
+        throw new AppError("You do not have permission to change one of this values", 404)
     }
 
     const updatedUser = userRepository.create({
         ...foundUserByParam,
-        ...userData,
+        name: name || foundUserByParam.name,
+        email: email || foundUserByParam.email,
+        password: password || foundUserByParam.password,
         updatedAt: new Date()
     })
 
@@ -39,6 +38,5 @@ const updateUserService = async (userData: IUserUpdateRequest, userId: string, u
     return userResponse
 }
 
-}
 
 export default updateUserService

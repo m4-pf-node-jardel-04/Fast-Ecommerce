@@ -47,6 +47,13 @@ const userWithNameAndIdSerializer: SchemaOf<IUserWithNameAndId> = yup
     name: yup.string(),
   });
 
+
+  const userUpdateSchema: SchemaOf<IUserUpdateRequest> = yup.object().shape({
+    name: yup.string().notRequired(),
+    email: yup.string().email().notRequired(),
+    password: yup.string().notRequired()
+  })
+
 export {
   userResponseSerializer,
   userUpdateSerializer,
@@ -54,4 +61,5 @@ export {
   userRequestSerializer,
   userLoginSerializer,
   userWithNameAndIdSerializer,
+  userUpdateSchema
 };
