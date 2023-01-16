@@ -13,8 +13,9 @@ const ensureDeleteOrEditAddressMiddleware = async (
   const user = await userRepository.findOneBy({
     id: req.user.id,
   });
+  console.log(user);
 
-  if (!req.user.isAdm && user.address.id !== req.params.id) {
+  if (!req.user.isAdm && user.address?.id !== req.params.id) {
     throw new AppError("You don't have authorization!", 401);
   }
 
