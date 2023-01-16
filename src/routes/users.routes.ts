@@ -9,9 +9,10 @@ import {
 import ensureAdminMiddleware from "../middlewares/ensureAdminMiddleware";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
-import { userLoginSerializer } from "../serializers/user.serializers";
+import { userLoginSerializer, userUpdateSchema } from "../serializers/user.serializers";
 import { loginUserController } from "../controllers/users.controllers";
 import { userRequestSerializer } from "../serializers/user.serializers";
+import ensureAdmOrUserMiddleware from "../middlewares/ensureAdmOrUser.middleware";
 
 const userRoutes = Router();
 
@@ -27,12 +28,12 @@ userRoutes.post(
 );
 userRoutes.get(
   "",
-  ensureAuthMiddleware,
+  ensureAuthMiddleware, ensureAdmOrUserMiddleware,
   ensureAdminMiddleware,
   listUsersController
 );
 
-userRoutes.patch("/:id", ensureAuthMiddleware, updateUserController);
+userRoutes.patch("/:id", ensureAuthMiddleware,  ensureAdmOrUserMiddleware, ensureDataIsValidMiddleware(userUpdateSchema), updateUserController);
 userRoutes.delete("/:id", ensureAuthMiddleware, deleteUserController);
 userRoutes.get("/:id", ensureAuthMiddleware, listUserByIdController);
 
