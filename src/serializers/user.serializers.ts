@@ -5,7 +5,8 @@ import { IUserRequest, IUserResponse, IUserUpdateRequest, IUserLogin, IUserRespo
 const userRequestSerializer: SchemaOf<IUserRequest> = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().required()
+  password: yup.string().required(),
+  isAdm: yup.boolean().notRequired()
 });
 
   const userResponseSerializer: SchemaOf<IUserResponse> = yup
