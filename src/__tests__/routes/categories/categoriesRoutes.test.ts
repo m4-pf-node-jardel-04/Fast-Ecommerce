@@ -86,9 +86,8 @@ describe("/categories", ()=>{
     })
 
     test("PATCH /categories/:id - The user must not be able to edit the category without authentication.", async() => {
-        const tokenUser = await request(app).post("/login").send(mockedUser)
         const categoryToUpdade = await request(app).get("/categories")
-        const res = await request(app).patch(`/categories/${categoryToUpdade.body[0].id}`).set("Authorization", `Bearer ${tokenUser.body.token}`).send(mockedEditCategory)
+        const res = await request(app).patch(`/categories/${categoryToUpdade.body[0].id}`).send(mockedEditCategory)
 
         expect(res.body).toHaveProperty("message")
         expect(res.status).toBe(401)
@@ -100,6 +99,6 @@ describe("/categories", ()=>{
         const res = await request(app).patch(`/categories/${categoryToUpdade.body[0].id}`).set("Authorization", `Bearer ${tokenUser.body.token}`).send(mockedEditCategory)
 
         expect(res.body).toHaveProperty("message")
-        expect(res.status).toBe(401)
+        expect(res.status).toBe(403)
     })
 })

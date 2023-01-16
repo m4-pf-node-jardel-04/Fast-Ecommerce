@@ -13,6 +13,7 @@ const userRequestSerializer: SchemaOf<IUserRequest> = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
   password: yup.string().required(),
+  isAdm: yup.boolean().notRequired()
 });
 
 const userResponseSerializer: SchemaOf<IUserResponse> = yup.object().shape({
