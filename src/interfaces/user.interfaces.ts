@@ -2,6 +2,7 @@ export interface IUserRequest {
     name: string
     email: string
     password: string
+    isAdm?: boolean;
 }
 
 export interface IUserResponse {
@@ -22,7 +23,6 @@ export interface IUserResponseDelete {
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
-    // deletedAt: Date;
 }
 
 export interface IUserSave {
