@@ -11,6 +11,7 @@ import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middle
 import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleware";
 import ensureListOrEditAddressMiddleware from "../middlewares/ensureListOrEditAddress.middleware";
 import ensureFieldsAddresMiddleware from "../middlewares/ensureFieldsAddress.middleware";
+import ensureAdmOrUserMiddleware from "../middlewares/ensureAdmOrUser.middleware";
 import {
   addressSerializer,
   updateAdressSerializer,
@@ -33,7 +34,7 @@ addressRoutes.get(
 addressRoutes.get(
   "/:id",
   ensureAuthMiddleware,
-  ensureListOrEditAddressMiddleware,
+  ensureAdmOrUserMiddleware,
   listAddressByUserController
 );
 addressRoutes.patch(
