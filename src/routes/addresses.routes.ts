@@ -28,8 +28,8 @@ addressRoutes.post(
 );
 addressRoutes.get(
   "",
-  // ensureAuthMiddleware,
-  // ensureAdminMiddleare,
+  ensureAuthMiddleware,
+  ensureAdminMiddleare,
   listAddressesController
 );
 addressRoutes.get(
