@@ -8,7 +8,11 @@ const listProductsToRequestService = async (
 ): Promise<Request> => {
   const requestsRepository = AppDataSource.getRepository(Request);
 
-  const request = await requestsRepository.findOneBy({ id: requestId });
+  const request = await requestsRepository
+    .createQueryBuilder("request")
+    .innerJoinAndSelect("request.user", "user")
+    .where("request.id = :id", { id: requestId })
+    .getOne();
 
   if (request.user.id !== userId) {
     throw new AppError("Invalid request id", 400);
@@ -16,7 +20,7 @@ const listProductsToRequestService = async (
 
   const productsToRequest = await requestsRepository
     .createQueryBuilder("requests")
-    .innerJoinAndSelect("requests.productTorequest", "productToRequest")
+    .innerJoinAndSelect("requests.productTorequest", "products")
     .where("requests.id = :id", { id: request.id })
     .getOne();
 

@@ -2,8 +2,9 @@ import AppDataSource from "../../data-source";
 import Request from "../../entities/request.entity";
 import User from "../../entities/user.entity";
 import { AppError } from "../../errors/AppError";
+import { createRequestResponseSerializer } from "../../serializers/requests.serializers";
 
-const createRequestService = async (userId: string): Promise<Request> => {
+const createRequestService = async (userId: string) => {
   const requestRepository = AppDataSource.getRepository(Request);
   const userRepository = AppDataSource.getRepository(User);
 
@@ -23,7 +24,12 @@ const createRequestService = async (userId: string): Promise<Request> => {
   const request = requestRepository.create({ user: user });
   await requestRepository.save(request);
 
-  return request;
+  const requestResponse = await createRequestResponseSerializer.validate(
+    request,
+    { stripUnknown: true }
+  );
+
+  return requestResponse;
 };
 
 export default createRequestService;

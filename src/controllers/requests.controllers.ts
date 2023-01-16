@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ICreateRequest } from "../interfaces/requests.interfaces";
+import { IUpdateRequest } from "../interfaces/requests.interfaces";
 import createRequestService from "../services/requests/createRequest.service";
 import deleteRequestService from "../services/requests/deleteRequest.service";
 import listAllRequestsService from "../services/requests/listAllRequests.service";
@@ -27,7 +27,7 @@ const listAllRequestsController = async (req: Request, res: Response) => {
 const updateRequestController = async (req: Request, res: Response) => {
   const userId: string = req.user.id;
   const requestId: string = req.params.id;
-  const updatedData: ICreateRequest = req.body;
+  const updatedData: IUpdateRequest = req.body;
   const updatedRequest = await updateRequestService(
     userId,
     requestId,
