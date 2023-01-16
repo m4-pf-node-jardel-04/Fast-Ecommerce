@@ -19,6 +19,7 @@ import ensureRequestExistsMiddleware from "../middlewares/ensureRequestExists.mi
 import {
   createProductToRequestsRequestSerializer,
   updateProductToRequestsRequestSerializer,
+  updateRequestSerializer,
 } from "../serializers/requests.serializers";
 
 const requestsRoutes = Router();
@@ -41,6 +42,7 @@ requestsRoutes.get(
 
 requestsRoutes.patch(
   "/:id",
+  ensureDataIsValidMiddleware(updateRequestSerializer),
   ensureAuthMiddleware,
   ensureRequestExistsMiddleware,
   updateRequestController
