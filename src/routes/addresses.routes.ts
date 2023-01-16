@@ -9,7 +9,7 @@ import {
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
 import ensureAdminMiddleare from "../middlewares/ensureAdminMiddleware";
-import ensureListOrEditAddressMiddleware from "../middlewares/ensureListOrEditAddress.middleware";
+import ensureDeleteOrEditAddressMiddleware from "../middlewares/ensureDeleteOrEditAddress.middleware";
 import ensureFieldsAddresMiddleware from "../middlewares/ensureFieldsAddress.middleware";
 import ensureAdmOrUserMiddleware from "../middlewares/ensureAdmOrUser.middleware";
 import {
@@ -41,7 +41,7 @@ addressRoutes.get(
 addressRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
-  ensureListOrEditAddressMiddleware,
+  ensureDeleteOrEditAddressMiddleware,
   ensureFieldsAddresMiddleware,
   ensureDataIsValidMiddleware(updateAdressSerializer),
   updateAddressController
@@ -49,7 +49,7 @@ addressRoutes.patch(
 addressRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
-  ensureListOrEditAddressMiddleware,
+  ensureDeleteOrEditAddressMiddleware,
   deleteAddressController
 );
 
