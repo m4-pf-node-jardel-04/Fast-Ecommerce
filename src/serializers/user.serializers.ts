@@ -35,4 +35,12 @@ const userLoginSerializer: SchemaOf<IUserLogin> = yup.object().shape({
     userResponseSerializer
   );
 
-export { userResponseSerializer, userUpdateSerializer, userResponseSerializerArray, userRequestSerializer, userLoginSerializer };
+
+  const userUpdateSchema: SchemaOf<IUserUpdateRequest> = yup.object().shape({
+    name: yup.string().notRequired(),
+    email: yup.string().email().notRequired(),
+    password: yup.string().notRequired()
+  })
+
+
+export { userResponseSerializer, userUpdateSerializer, userResponseSerializerArray, userRequestSerializer, userLoginSerializer, userUpdateSchema };
