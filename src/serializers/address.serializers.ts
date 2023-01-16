@@ -5,6 +5,7 @@ import {
   IAddress,
   IAddressUpdate,
 } from "../interfaces/address.interfaces";
+import { userWithNameAndIdSerializer } from "./user.serializers";
 
 const addressSerializer: SchemaOf<IAddressRequest> = yup.object().shape({
   nickname: yup.string().max(50).required(),
@@ -14,7 +15,6 @@ const addressSerializer: SchemaOf<IAddressRequest> = yup.object().shape({
   complement: yup.string(),
   city: yup.string().max(50).required(),
   state: yup.string().min(2).max(2).lowercase().required(),
-  user: yup.object(),
 });
 
 const adressWithIdSerializer: SchemaOf<IAddress> = yup.object().shape({
@@ -22,19 +22,19 @@ const adressWithIdSerializer: SchemaOf<IAddress> = yup.object().shape({
   nickname: yup.string().max(50).notRequired(),
   district: yup.string().max(50).notRequired(),
   zipCode: yup.string().max(8).notRequired(),
-  number: yup.number().max(10).notRequired(),
-  complement: yup.string().max(50).notRequired(),
+  number: yup.number().notRequired(),
+  complement: yup.string().notRequired(),
   city: yup.string().max(50).notRequired(),
   state: yup.string().min(2).max(2).notRequired(),
-  user: yup.object(),
+  user: userWithNameAndIdSerializer,
 });
 
 const updateAdressSerializer: SchemaOf<IAddressUpdate> = yup.object().shape({
   nickname: yup.string().max(50).notRequired(),
   district: yup.string().max(50).notRequired(),
   zipCode: yup.string().max(8).notRequired(),
-  number: yup.number().max(10).notRequired(),
-  complement: yup.string().max(50).notRequired(),
+  number: yup.number().notRequired(),
+  complement: yup.string().notRequired(),
   city: yup.string().max(50).notRequired(),
   state: yup.string().min(2).max(2).lowercase().notRequired(),
 });

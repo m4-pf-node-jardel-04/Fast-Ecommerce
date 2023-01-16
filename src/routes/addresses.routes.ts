@@ -22,13 +22,14 @@ const addressRoutes = Router();
 addressRoutes.post(
   "",
   ensureAuthMiddleware,
+  ensureFieldsAddresMiddleware,
   ensureDataIsValidMiddleware(addressSerializer),
   createAddressController
 );
 addressRoutes.get(
   "",
-  ensureAuthMiddleware,
-  ensureAdminMiddleare,
+  // ensureAuthMiddleware,
+  // ensureAdminMiddleare,
   listAddressesController
 );
 addressRoutes.get(

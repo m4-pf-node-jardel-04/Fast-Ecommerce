@@ -1,3 +1,6 @@
+import User from "../entities/user.entity";
+import { IUserWithNameAndId } from "./user.interfaces";
+
 export interface IAddressRequest {
   nickname: string;
   district: string;
