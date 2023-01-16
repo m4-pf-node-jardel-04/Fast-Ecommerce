@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import User from "./user.entity";
 
 @Entity("addresses")
 class Address {
@@ -25,6 +26,9 @@ class Address {
 
   @Column({ length: 2 })
   state: string;
+
+  @OneToOne(() => User, (user) => user.address)
+  user: User;
 }
 
 export default Address;

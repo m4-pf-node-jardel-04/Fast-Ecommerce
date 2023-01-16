@@ -1,19 +1,23 @@
-import { UpdateResult } from "typeorm";
 import AppDataSource from "../../data-source";
 import Request from "../../entities/request.entity";
 import User from "../../entities/user.entity";
 import { AppError } from "../../errors/AppError";
-import { ICreateRequest } from "../../interfaces/requests.interfaces";
+import { IUpdateRequest } from "../../interfaces/requests.interfaces";
 
 const updateRequestService = async (
   userId: string,
   requestId: string,
-  updatedData: ICreateRequest
-): Promise<UpdateResult> => {
+  updatedData: IUpdateRequest
+) => {
   const requestRepository = AppDataSource.getRepository(Request);
   const userRepository = AppDataSource.getRepository(User);
 
-  const request = await requestRepository.findOneBy({ id: requestId });
+  const request = await requestRepository
+    .createQueryBuilder("request")
+    .innerJoinAndSelect("request.user", "user")
+    .innerJoinAndSelect("request.productTorequest", "productToRequest")
+    .where("request.id = :id", { id: requestId })
+    .getOne();
   const user = await userRepository.findOneBy({ id: userId });
 
   if (request.status !== "em aberto") {
@@ -24,10 +28,10 @@ const updateRequestService = async (
     throw new AppError("Invalid request", 400);
   }
 
-  const updatedRequest = await requestRepository.update(
-    { id: request.id },
-    { status: updatedData.status }
-  );
+  const updatedRequest = await requestRepository.save({
+    id: request.id,
+    status: updatedData.status,
+  });
 
   return updatedRequest;
 };

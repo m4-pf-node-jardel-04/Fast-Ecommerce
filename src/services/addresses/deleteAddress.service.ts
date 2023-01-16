@@ -10,7 +10,7 @@ const deleteAddressService = async (addressId: string): Promise<object> => {
     throw new AppError("Address not find!", 404);
   }
 
-  await addressRepo.delete(address);
+  await addressRepo.remove(address);
 
   return {};
 };

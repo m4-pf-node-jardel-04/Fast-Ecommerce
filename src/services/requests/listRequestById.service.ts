@@ -2,22 +2,31 @@ import AppDataSource from "../../data-source";
 import Request from "../../entities/request.entity";
 import User from "../../entities/user.entity";
 import { AppError } from "../../errors/AppError";
+import { listRequestByIdResponseSerializer } from "../../serializers/requests.serializers";
 
-const listRequestByIdService = async (
-  userId: string,
-  requestId: string
-): Promise<Request> => {
+const listRequestByIdService = async (userId: string, requestId: string) => {
   const requestRepository = AppDataSource.getRepository(Request);
   const userRepository = AppDataSource.getRepository(User);
 
-  const request = await requestRepository.findOneBy({ id: requestId });
+  const request = await requestRepository
+    .createQueryBuilder("request")
+    .innerJoinAndSelect("request.user", "user")
+    .innerJoinAndSelect("request.productTorequest", "productToRequest")
+    .where("request.id = :id", { id: requestId })
+    .getOne();
+
   const user = await userRepository.findOneBy({ id: userId });
 
   if (!user.isAdm && request.user.id !== user.id) {
     throw new AppError("Invalid request", 400);
   }
 
-  return request;
+  const requestReturn = await listRequestByIdResponseSerializer.validate(
+    request,
+    { stripUnknown: true }
+  );
+
+  return requestReturn;
 };
 
 export default listRequestByIdService;
