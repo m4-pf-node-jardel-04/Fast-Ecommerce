@@ -7,7 +7,12 @@ const deleteRequestService = async (userId: string, requestId: string) => {
   const requestRepository = AppDataSource.getRepository(Request);
   const userRepository = AppDataSource.getRepository(User);
 
-  const request = await requestRepository.findOneBy({ id: requestId });
+  const request = await requestRepository
+    .createQueryBuilder("request")
+    .innerJoinAndSelect("request.user", "user")
+    .innerJoinAndSelect("request.productTorequest", "productToRequest")
+    .where("request.id = :id", { id: requestId })
+    .getOne();
   const user = await userRepository.findOneBy({ id: userId });
 
   if (request.status !== "em aberto") {

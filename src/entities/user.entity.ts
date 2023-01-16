@@ -40,7 +40,10 @@ class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Address, { eager: true, onDelete: "SET NULL" })
+  @OneToOne(() => Address, (address) => address.user, {
+    eager: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
   address: Address;
 

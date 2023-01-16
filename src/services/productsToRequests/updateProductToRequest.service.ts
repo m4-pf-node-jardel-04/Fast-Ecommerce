@@ -4,20 +4,24 @@ import Request from "../../entities/request.entity";
 import Product from "../../entities/products.entity";
 import ProductToRequest from "../../entities/productToRequest.entity";
 import { AppError } from "../../errors/AppError";
-import { UpdateResult } from "typeorm";
 
 const updateProductToRequestService = async (
   requestId: string,
   userId: string,
   productId: string,
   updatedData: IUpdateProductToRequest
-): Promise<UpdateResult> => {
+) => {
   const requestsRepository = AppDataSource.getRepository(Request);
   const productsRepository = AppDataSource.getRepository(Product);
   const productsToRequestsRepository =
     AppDataSource.getRepository(ProductToRequest);
 
-  const request = await requestsRepository.findOneBy({ id: requestId });
+  const request = await requestsRepository
+    .createQueryBuilder("request")
+    .innerJoinAndSelect("request.user", "user")
+    .innerJoinAndSelect("request.productTorequest", "productToRequest")
+    .where("request.id = :id", { id: requestId })
+    .getOne();
 
   if (request.user.id !== userId) {
     throw new AppError("Invalid request id", 400);
@@ -29,8 +33,10 @@ const updateProductToRequestService = async (
 
   const findProduct = await productsToRequestsRepository
     .createQueryBuilder("productToRequest")
-    .where("productToRequest.requestId = :id", { id: requestId })
-    .andWhere("productToRequest.productId = :id", { id: productId })
+    .where("productToRequest.requestId = :requestId", { requestId: requestId })
+    .andWhere("productToRequest.productId = :productId", {
+      productId: productId,
+    })
     .getOne();
 
   if (!findProduct) {
@@ -49,6 +55,9 @@ const updateProductToRequestService = async (
 
   if (findProduct.quantity < updatedData.quantity) {
     const diference = updatedData.quantity - findProduct.quantity;
+    if (diference > product.quantity) {
+      throw new AppError("insufficient product stock", 409);
+    }
     await productsRepository.update(
       { id: product.id },
       { quantity: product.quantity - diference }
@@ -57,7 +66,7 @@ const updateProductToRequestService = async (
 
   updatedData.value = updatedData.quantity * product.price;
 
-  const updatedProduct = await productsToRequestsRepository.update(
+  await productsToRequestsRepository.update(
     { id: findProduct.id },
     {
       quantity: updatedData.quantity,
@@ -65,29 +74,26 @@ const updateProductToRequestService = async (
     }
   );
 
-  const totalValue: number = await requestsRepository
-    .createQueryBuilder("requests")
-    .innerJoinAndSelect("requests.productTorequest", "productToRequest")
-    .addSelect("SUM(productToRequest.value)", "sum")
-    .where("requests.id = :id", { id: request.id })
+  const { totalValue } = await productsToRequestsRepository
+    .createQueryBuilder("productToRequest")
+    .where("productToRequest.requestId = :id", { id: requestId })
+    .select("SUM(productToRequest.value)", "totalValue")
     .getRawOne();
 
-  const totalQuantity: number = await requestsRepository
-    .createQueryBuilder("requests")
-    .innerJoinAndSelect("requests.productTorequest", "productToRequest")
-    .addSelect("SUM(productToRequest.quantity)", "sum")
-    .where("requests.id = :id", { id: request.id })
+  const { totalQuantity } = await productsToRequestsRepository
+    .createQueryBuilder("productToRequest")
+    .where("productToRequest.requestId = :id", { id: requestId })
+    .select("SUM(productToRequest.quantity)", "totalQuantity")
     .getRawOne();
 
-  await requestsRepository.update(
-    { id: request.id },
-    {
-      totalQuantity: totalQuantity,
-      totalValue: totalValue,
-    }
-  );
+  const updatedProductToRequest = await requestsRepository.save({
+    id: request.id,
+    totalQuantity: Number(totalQuantity),
+    totalValue: Number(totalValue),
+    productName: product.name,
+  });
 
-  return updatedProduct;
+  return updatedProductToRequest;
 };
 
 export default updateProductToRequestService;
