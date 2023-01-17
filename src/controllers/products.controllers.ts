@@ -26,7 +26,7 @@ const updateProductController = async(req: Request, res:Response) => {
     const productData: IProductsUpdate = req.body
     const productId = req.params.id
     const updateProduct = await updateProductService(productData,productId);
-    return res.status(201).json(updateProduct)
+    return res.status(200).json(updateProduct)
 }
 
 
