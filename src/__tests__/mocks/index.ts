@@ -33,7 +33,7 @@ export const mockedAddressRequest: IAddressRequest = {
   number: 10655,
   complement: "Casa 19",
   city: "Luís Correia",
-  state: "pi",
+  state: "PI",
 };
 
 export const mockedAddressResponse: Omit<IAddress, "id"> = {
