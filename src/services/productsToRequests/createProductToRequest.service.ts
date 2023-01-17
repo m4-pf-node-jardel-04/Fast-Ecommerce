@@ -23,11 +23,11 @@ const createProductToRequestService = async (
     .getOne();
 
   if (request.user.id !== userId) {
-    throw new AppError("Invalid request id", 400);
+    throw new AppError("The request does not belong to user", 400);
   }
 
   if (request.status !== "em aberto") {
-    throw new AppError("Invalid request id", 400);
+    throw new AppError("The request has been already finalized", 400);
   }
 
   const product = await productsRepository.findOneBy({
