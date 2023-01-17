@@ -18,7 +18,7 @@ const updateUserService = async (userData: IUserUpdateRequest, userId: string): 
     const {name, email, password} = userData
 
     if(!name && !email && !password){
-        throw new AppError("You do not have permission to change one of this values", 404)
+        throw new AppError("You do not have permission to change one of this values", 403)
     }
 
     const updatedUser = userRepository.create({
