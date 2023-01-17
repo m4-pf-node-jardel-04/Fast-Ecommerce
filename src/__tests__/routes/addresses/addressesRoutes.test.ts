@@ -1,8 +1,7 @@
 import dataSource from "../../../data-source";
-import { DataSource, Repository } from "typeorm";
+import { DataSource } from "typeorm";
 import request from "supertest";
 import app from "../../../app";
-import Address from "../../../entities/addresses.entity";
 import {
   mockedAddressRequest,
   mockedAddressResponse,
