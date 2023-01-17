@@ -8,7 +8,7 @@ const ensureRequestExistsMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const request = AppDataSource.getRepository(Request).findOneBy({
+  const request = await AppDataSource.getRepository(Request).findOneBy({
     id: req.params.id,
   });
 

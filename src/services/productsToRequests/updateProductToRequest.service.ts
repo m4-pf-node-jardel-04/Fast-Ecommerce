@@ -24,11 +24,11 @@ const updateProductToRequestService = async (
     .getOne();
 
   if (request.user.id !== userId) {
-    throw new AppError("Invalid request id", 400);
+    throw new AppError("The request does not belong to user", 400);
   }
 
   if (request.status !== "em aberto") {
-    throw new AppError("Invalid request id", 400);
+    throw new AppError("The request has been already finalized", 400);
   }
 
   const findProduct = await productsToRequestsRepository
@@ -66,13 +66,12 @@ const updateProductToRequestService = async (
 
   updatedData.value = updatedData.quantity * product.price;
 
-  await productsToRequestsRepository.update(
-    { id: findProduct.id },
-    {
-      quantity: updatedData.quantity,
-      value: updatedData.value,
-    }
-  );
+  const updatedProductToRequest = await productsToRequestsRepository.save({
+    id: findProduct.id,
+    quantity: updatedData.quantity,
+    value: updatedData.value,
+    productName: product.name,
+  });
 
   const { totalValue } = await productsToRequestsRepository
     .createQueryBuilder("productToRequest")
@@ -86,11 +85,10 @@ const updateProductToRequestService = async (
     .select("SUM(productToRequest.quantity)", "totalQuantity")
     .getRawOne();
 
-  const updatedProductToRequest = await requestsRepository.save({
+  await requestsRepository.save({
     id: request.id,
-    totalQuantity: Number(totalQuantity),
-    totalValue: Number(totalValue),
-    productName: product.name,
+    totalQuantity: Number(totalQuantity) ? Number(totalQuantity) : 0,
+    totalValue: Number(totalValue) ? Number(totalValue) : 0,
   });
 
   return updatedProductToRequest;
