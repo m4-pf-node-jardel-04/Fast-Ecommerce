@@ -9,7 +9,7 @@ const deleteUserService = async (userId: string, userAuth: string) => {
   const foundUserByAuth = await userRepository.findOneBy({ id: userAuth });
 
   if (!foundUserByParam) {
-    throw new AppError("User not found. Informed id is incorrect.", 401);
+    throw new AppError("User not found. Informed id is incorrect.", 404);
   }
 
   if (foundUserByParam.isActive === false) {
