@@ -84,10 +84,57 @@ describe("/addresses", () => {
   });
 
   test("GET /addresses -  should not be able to list addresses without Admin", async () => {
-    const response = await request(app).get("/addresses");
+    const response = await request(app).get(baseUrl);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
+  });
+
+  test("GET /addresses/:id -  Must be able to list own address", async () => {
+    const user = await request(app).post("/users").send(mockedUser2);
+
+    console.log(user.body);
+    const tokenUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin2);
+
+    await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`)
+      .send(mockedAddressRequest);
+
+    const response = await request(app)
+      .get(`${baseUrl}/${user.body.id}`)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`);
+
+    // console.log(response.body);
+
+    expect(response.body).toEqual(
+      expect.objectContaining(mockedAddressResponse)
+    );
+  });
+
+  test("GET /addresses/:id -  should not be able to list addresses with invalid id", async () => {
+    const user = await request(app).post("/users").send(mockedUser2);
+
+    console.log(user.body);
+    const tokenUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin2);
+
+    await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`)
+      .send(mockedAddressRequest);
+
+    const response = await request(app)
+      .get(`${baseUrl}/15205722-47bd-4107-8cd4-680229f00098`)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`);
+
+    // console.log(response.body);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message");
   });
 
   test("DELETE /addresses/:id -  Logged user must be able to delete own address", async () => {
