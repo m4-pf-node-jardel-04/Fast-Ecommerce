@@ -23,7 +23,10 @@ class Product{
     @Column({ type: 'integer' })
     quantity: number
 
-    @ManyToOne(() => Category, categories => categories.product)
+    @ManyToOne(() => Category, categories => categories.product,{
+        eager: true,
+        onDelete: "SET NULL",
+    })
     category: Category
 
     @OneToMany(() => ProcuctToRequest, productTorequest => productTorequest.product)
