@@ -9,6 +9,13 @@ export const mockedUser: IUserRequest = {
   password: "123456",
 };
 
+export const mockedUser2: IUserRequest = {
+  name: "user2",
+  email: "user2@mail.com",
+  isAdm: false,
+  password: "123456",
+};
+
 export const mockedAdmin: IUserRequest = {
   name: "admin",
   email: "admin@mail.com",
@@ -18,6 +25,11 @@ export const mockedAdmin: IUserRequest = {
 
 export const mockedUserLogin: IUserLogin = {
   email: "user@mail.com",
+  password: "123456",
+};
+
+export const mockedUserLogin2: IUserLogin = {
+  email: "user2@mail.com",
   password: "123456",
 };
 
