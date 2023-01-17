@@ -92,7 +92,6 @@ describe("/addresses", () => {
   test("GET /addresses/:id -  Must be able to list own address", async () => {
     const user = await request(app).post("/users").send(mockedUser2);
 
-    console.log(user.body);
     const tokenUser = await request(app)
       .post("/users/login")
       .send(mockedUserLogin2);
@@ -112,9 +111,6 @@ describe("/addresses", () => {
   });
 
   test("GET /addresses/:id -  should not be able to list addresses with invalid id", async () => {
-    const user = await request(app).post("/users").send(mockedUser2);
-
-    console.log(user.body);
     const tokenUser = await request(app)
       .post("/users/login")
       .send(mockedUserLogin2);
