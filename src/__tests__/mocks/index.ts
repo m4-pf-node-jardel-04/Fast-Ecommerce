@@ -1,9 +1,8 @@
 
-import { ICategoryRequest, ICategoryResponse } from "../../interfaces/category.interfaces";
+import { ICategoryRequest } from "../../interfaces/category.interfaces";
 import { IProductsRequest } from "../../interfaces/product.interfaces";
 
 import { IAddressRequest, IAddress } from "../../interfaces/address.interfaces";
-import { ICategoryRequest } from "../../interfaces/category.interfaces";
 
 import { IUserLogin, IUserRequest } from "../../interfaces/user.interfaces";
 
