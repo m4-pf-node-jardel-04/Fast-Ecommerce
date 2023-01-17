@@ -106,8 +106,6 @@ describe("/addresses", () => {
       .get(`${baseUrl}/${user.body.id}`)
       .set("Authorization", `Bearer ${tokenUser.body.token}`);
 
-    // console.log(response.body);
-
     expect(response.body).toEqual(
       expect.objectContaining(mockedAddressResponse)
     );
@@ -129,8 +127,6 @@ describe("/addresses", () => {
     const response = await request(app)
       .get(`${baseUrl}/15205722-47bd-4107-8cd4-680229f00098`)
       .set("Authorization", `Bearer ${tokenUser.body.token}`);
-
-    // console.log(response.body);
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
