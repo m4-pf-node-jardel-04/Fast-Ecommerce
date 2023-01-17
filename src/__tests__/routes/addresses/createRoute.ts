@@ -116,4 +116,32 @@ describe("/addresses", () => {
 
     expect(response.status).toBe(204);
   });
+
+  test("DELETE /addresses/:id -  Not to be able delete address of another user ", async () => {
+    await request(app).post("/users").send(mockedUser2);
+
+    const tokenUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin2);
+
+    const tokenAdmin = await request(app)
+      .post("/users/login")
+      .send(mockedAdminLogin);
+
+    await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`)
+      .send(mockedAddressRequest);
+
+    const address = await request(app)
+      .get(baseUrl)
+      .set("Authorization", `Bearer ${tokenAdmin.body.token}`);
+
+    const response = await request(app)
+      .delete(`/addresses/${address.body[0].id}`)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message");
+  });
 });
