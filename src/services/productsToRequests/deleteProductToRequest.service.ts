@@ -21,12 +21,14 @@ const deleteProductToRequestService = async (
     .where("request.id = :id", { id: requestId })
     .getOne();
 
+  console.log(request);
+
   if (request.user.id !== userId) {
-    throw new AppError("Invalid request id", 400);
+    throw new AppError("The request does not belong to user", 400);
   }
 
   if (request.status !== "em aberto") {
-    throw new AppError("Invalid request id", 400);
+    throw new AppError("The request has been already finalized", 400);
   }
 
   const findProduct = await productsToRequestsRepository
@@ -36,9 +38,6 @@ const deleteProductToRequestService = async (
       productId: productId,
     })
     .getOne();
-
-  console.log(productId, requestId);
-  console.log(findProduct);
 
   if (!findProduct) {
     throw new AppError("Product not found on request", 404);
@@ -68,8 +67,8 @@ const deleteProductToRequestService = async (
   await requestsRepository.update(
     { id: request.id },
     {
-      totalQuantity: totalQuantity,
-      totalValue: totalValue,
+      totalQuantity: totalQuantity ? totalQuantity : 0,
+      totalValue: totalValue ? totalValue : 0,
     }
   );
 
