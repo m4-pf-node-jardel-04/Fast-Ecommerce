@@ -178,7 +178,7 @@ describe("/requests", () => {
     expect(response.body).toHaveProperty("message");
   });
 
-  test("PATCH /requests/:id - Should not be able to list own request without auth", async () => {
+  test("PATCH /requests/:id - Must be able to update own request", async () => {
     await request(app).post("/users").send(mockedUser2);
     const tokenUser = await request(app)
       .post("/users/login")
@@ -197,6 +197,24 @@ describe("/requests", () => {
     expect(response.body).toEqual(
       expect.objectContaining({ status: "finalizado" })
     );
+  });
+
+  test("PATCH /requests/:id - Should not be able to update own request without auth", async () => {
+    await request(app).post("/users").send(mockedUser2);
+    const tokenUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin2);
+
+    const createRequest = await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`);
+
+    const response = await request(app)
+      .patch(`${baseUrl}/${createRequest.body.id}`)
+      .send(mockedUpdateRequest);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message");
   });
 
   test("DELETE /requests/:id - Must to be able to delete own request", async () => {
