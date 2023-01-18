@@ -11,17 +11,15 @@ const updateProductToRequestService = async (
   productId: string,
   updatedData: IUpdateProductToRequest
 ) => {
-  const requestsRepository = AppDataSource.getRepository(Request);
+  const requestRepository = AppDataSource.getRepository(Request);
   const productsRepository = AppDataSource.getRepository(Product);
   const productsToRequestsRepository =
     AppDataSource.getRepository(ProductToRequest);
 
-  const request = await requestsRepository
-    .createQueryBuilder("request")
-    .innerJoinAndSelect("request.user", "user")
-    .innerJoinAndSelect("request.productTorequest", "productToRequest")
-    .where("request.id = :id", { id: requestId })
-    .getOne();
+  const [request] = await requestRepository.find({
+    where: { id: requestId },
+    relations: { user: true, productTorequest: true },
+  });
 
   if (request.user.id !== userId) {
     throw new AppError("The request does not belong to user", 400);
@@ -85,7 +83,7 @@ const updateProductToRequestService = async (
     .select("SUM(productToRequest.quantity)", "totalQuantity")
     .getRawOne();
 
-  await requestsRepository.save({
+  await requestRepository.save({
     id: request.id,
     totalQuantity: Number(totalQuantity) ? Number(totalQuantity) : 0,
     totalValue: Number(totalValue) ? Number(totalValue) : 0,

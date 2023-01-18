@@ -9,19 +9,15 @@ const deleteProductToRequestService = async (
   userId: string,
   productId: string
 ) => {
-  const requestsRepository = AppDataSource.getRepository(Request);
+  const requestRepository = AppDataSource.getRepository(Request);
   const productsToRequestsRepository =
     AppDataSource.getRepository(ProductToRequest);
   const productRepository = AppDataSource.getRepository(Product);
 
-  const request = await requestsRepository
-    .createQueryBuilder("request")
-    .innerJoinAndSelect("request.user", "user")
-    .innerJoinAndSelect("request.productTorequest", "productToRequest")
-    .where("request.id = :id", { id: requestId })
-    .getOne();
-
-  console.log(request);
+  const [request] = await requestRepository.find({
+    where: { id: requestId },
+    relations: { user: true, productTorequest: true },
+  });
 
   if (request.user.id !== userId) {
     throw new AppError("The request does not belong to user", 400);
@@ -64,7 +60,7 @@ const deleteProductToRequestService = async (
     .select("SUM(productToRequest.quantity)", "totalQuantity")
     .getRawOne();
 
-  await requestsRepository.update(
+  await requestRepository.update(
     { id: request.id },
     {
       totalQuantity: totalQuantity ? totalQuantity : 0,
