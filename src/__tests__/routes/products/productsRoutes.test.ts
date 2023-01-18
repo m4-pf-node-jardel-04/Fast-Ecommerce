@@ -105,6 +105,37 @@ describe("/products", () => {
     expect(response.status).toBe(200);
   });
 
+  test("GET /products/:id - should be able to list user with id", async () => {
+    await request(app).post("/products").send(mockedAdmin);
+
+    const adminLoginResponse = await request(app)
+      .post("/users/login")
+      .send(mockedAdminLogin);
+
+    const userTobeList = await request(app)
+      .get("/products")
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+
+    const response = await request(app)
+      .get(`/products/${userTobeList.body[0].id}`)
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+
+    expect(response.status).toBe(200);
+  });
+
+  test("GET /products/:id - should not be able to list user with invalid id", async () => {
+    const userLoginResponse = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const response = await request(app)
+      .get(`/products/05a7c5ba-e0d4-48ec-a6a0-2e497fd3dc57`)
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
+
   test("PATCH /products/:id - Must be able to edit a product name", async () => {
     const tokenAdmin = await request(app)
       .post("/users/login")
