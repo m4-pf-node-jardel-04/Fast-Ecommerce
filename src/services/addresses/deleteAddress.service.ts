@@ -8,7 +8,7 @@ const deleteAddressService = async (addressId: string): Promise<object> => {
 
   if (!address) {
     throw new AppError("Address not find!", 404);
-  }
+  };
 
   await addressRepo.remove(address);
 

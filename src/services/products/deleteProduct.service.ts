@@ -10,7 +10,7 @@ const deleteProductService = async (productId: string):Promise<void> => {
 
   if (!product) {
     throw new AppError("Product not found", 404);
-  }
+  };
 
   await productsRepository.remove(product);
 

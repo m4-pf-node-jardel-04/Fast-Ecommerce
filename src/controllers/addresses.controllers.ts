@@ -4,10 +4,7 @@ import deleteAddressService from "../services/addresses/deleteAddress.service";
 import listAddressesService from "../services/addresses/listAddresses.service";
 import listAddressByUserService from "../services/addresses/listAddressByUser.service";
 import updateAddressService from "../services/addresses/updateAddress.service";
-import {
-  IAddressRequest,
-  IAddressUpdate,
-} from "../interfaces/address.interfaces";
+import { IAddressRequest, IAddressUpdate } from "../interfaces/address.interfaces";
 
 const createAddressController = async (req: Request, res: Response) => {
   const addressData: IAddressRequest = req.body;

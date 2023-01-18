@@ -16,18 +16,19 @@ const createAddressService = async (
 
   if (!idUser) {
     throw new AppError("User not exists", 404);
-  }
+  };
 
   if (idUser.address) {
     throw new AppError("Address already create", 409);
-  }
+  };
 
   const addressRepo = dataSource.getRepository(Address);
 
   const createdAddress = addressRepo.create(addressData);
-  await addressRepo.save(createdAddress);
 
+  await addressRepo.save(createdAddress);
   await userRepo.update({ id: userId }, { address: createdAddress });
+  
   return createdAddress;
 };
 

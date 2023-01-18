@@ -15,12 +15,13 @@ const updateAddressService = async (
 
   if (!findAddress) {
     throw new AppError("Address not find", 404);
-  }
+  };
 
   const updateAdress = addressRepo.create({
     ...findAddress,
     ...adressData,
   });
+  
   await addressRepo.save(updateAdress);
 
   return updateAdress;

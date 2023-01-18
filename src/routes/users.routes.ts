@@ -1,11 +1,5 @@
 import { Router } from "express";
-import {
-  createUserController,
-  deleteUserController,
-  listUserByIdController,
-  listUsersController,
-  updateUserController,
-} from "../controllers/users.controllers";
+import { createUserController, deleteUserController, listUserByIdController, listUsersController, updateUserController,} from "../controllers/users.controllers";
 import ensureAdminMiddleware from "../middlewares/ensureAdminMiddleware";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureDataIsValidMiddleware from "../middlewares/ensureDataIsValid.middleware";
@@ -21,11 +15,13 @@ userRoutes.post(
   ensureDataIsValidMiddleware(userLoginSerializer),
   loginUserController
 );
+
 userRoutes.post(
   "",
   ensureDataIsValidMiddleware(userRequestSerializer),
   createUserController
 );
+
 userRoutes.get(
   "",
   ensureAuthMiddleware, ensureAdmOrUserMiddleware,

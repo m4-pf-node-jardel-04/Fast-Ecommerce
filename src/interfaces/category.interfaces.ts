@@ -1,19 +1,17 @@
-import Product from "../entities/products.entity"
 import { IProductsResponse } from "./product.interfaces"
 
-interface ICategoryRequest {
+export interface ICategoryRequest {
     name: string
-}
+};
 
-interface ICategoryResponse {
+export interface ICategoryResponse {
     id: string
     name: string
-}
+};
 
-interface IproductsInCategoryResponse{
+export interface IproductsInCategoryResponse{
     id: string
     name: string
     product: Array<IProductsResponse>
-}
+};
 
-export { ICategoryRequest, ICategoryResponse, IproductsInCategoryResponse }

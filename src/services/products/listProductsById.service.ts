@@ -8,8 +8,7 @@ const listProductByIdService = async (productId: string) => {
 
   if (!foundProductByParam) {
     throw new AppError("Product category not found", 404);
-  }
-  console.log(foundProductByParam)
+  };
 
   return { foundProductByParam };
 };

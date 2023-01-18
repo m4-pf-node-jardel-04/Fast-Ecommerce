@@ -16,7 +16,7 @@ const listProductsToRequestService = async (
 
   if (request.user.id !== userId) {
     throw new AppError("The request does not belong to user", 400);
-  }
+  };
 
   const productsToRequest = await requestsRepository
     .createQueryBuilder("requests")

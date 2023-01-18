@@ -8,10 +8,7 @@ import deleteProductToRequestService from "../services/productsToRequests/delete
 import listProductsToRequestService from "../services/productsToRequests/listProductsToRequest.service";
 import updateProductToRequestService from "../services/productsToRequests/updateProductToRequest.service";
 
-const createProductToRequestController = async (
-  req: Request,
-  res: Response
-) => {
+const createProductToRequestController = async (req: Request, res: Response ) => {
   const requestId: string = req.params.id;
   const userId: string = req.user.id;
   const productData: ICreateProductToRequest = req.body;
@@ -20,6 +17,7 @@ const createProductToRequestController = async (
     userId,
     productData
   );
+
   return res.status(201).json(productToRequest);
 };
 
@@ -30,13 +28,11 @@ const listProductsToRequestController = async (req: Request, res: Response) => {
     requestId,
     userId
   );
+
   return res.json(productsToRequestlist);
 };
 
-const updateProductToRequestController = async (
-  req: Request,
-  res: Response
-) => {
+const updateProductToRequestController = async (req: Request, res: Response) => {
   const requestId: string = req.params.id;
   const userId: string = req.user.id;
   const productId: string = req.params.productId;
@@ -47,13 +43,11 @@ const updateProductToRequestController = async (
     productId,
     updatedData
   );
+
   return res.json(updatedProductToRequest);
 };
 
-const deleteProductToRequestController = async (
-  req: Request,
-  res: Response
-) => {
+const deleteProductToRequestController = async (req: Request, res: Response) => {
   const requestId: string = req.params.id;
   const userId: string = req.user.id;
   const productId: string = req.params.productId;
@@ -62,6 +56,7 @@ const deleteProductToRequestController = async (
     userId,
     productId
   );
+
   return res.status(204).json(deletedProductToRequest);
 };
 

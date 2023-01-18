@@ -17,7 +17,7 @@ const createRequestService = async (userId: string) => {
 
   if (findRequest) {
     throw new AppError("User already have an request open", 409);
-  }
+  };
 
   const user = await userRepository.findOneBy({ id: userId });
 

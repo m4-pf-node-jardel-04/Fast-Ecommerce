@@ -8,7 +8,7 @@ const deleteCategoryService = async(IdCategory: string): Promise<object> => {
     const categoryExist = await categoryRepository.findOneBy({id: IdCategory});
 
     if(!categoryExist){
-        throw new AppError('Category not exists', 404)
+        throw new AppError('Category not exists', 404);
     };
 
     categoryRepository.remove(categoryExist);

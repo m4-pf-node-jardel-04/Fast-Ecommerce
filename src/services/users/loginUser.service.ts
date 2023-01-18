@@ -24,17 +24,17 @@ const loginUserService = async ({
 
   if (!foundUser) {
     throw new AppError("Wrong email or password.", 403);
-  }
+  };
 
   if (!foundUser.isActive) {
     throw new AppError("User is not active on database.");
-  }
+  };
 
   const passwordMatch = await compare(password, foundUser.password);
 
   if (!passwordMatch) {
     throw new AppError("Wrong email or password.", 403);
-  }
+  };
 
   const token = Jwt.sign({ isAdm: foundUser.isAdm }, process.env.SECRET_KEY, {
     expiresIn: "24h",

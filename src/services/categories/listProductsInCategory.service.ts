@@ -10,7 +10,7 @@ const listProductsInCategoryService = async(IdCategory: string): Promise<Iproduc
     const categoryExist = await categoryRepository.findOneBy({id: IdCategory});
 
     if(!categoryExist){
-        throw new AppError('Category not exists', 404)
+        throw new AppError('Category not exists', 404);
     };
 
     const products = await categoryRepository.findOne({
