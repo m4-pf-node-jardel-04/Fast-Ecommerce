@@ -56,6 +56,7 @@ describe("/products", () => {
     expect(response.body).toHaveProperty("description");
     expect(response.body).toHaveProperty("image");
     expect(response.body).toHaveProperty("quantity");
+    expect(response.body).toHaveProperty("category");
     expect(response.status).toBe(201);
   });
 
@@ -120,6 +121,7 @@ describe("/products", () => {
     expect(response.body).toHaveProperty("description");
     expect(response.body).toHaveProperty("image");
     expect(response.body).toHaveProperty("quantity");
+    expect(response.body).toHaveProperty("category");
     expect(response.status).toBe(200);
   });
 
