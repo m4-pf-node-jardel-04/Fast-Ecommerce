@@ -26,7 +26,7 @@ const createProductService = async ({name,price,description,image,quantity,categ
         throw new AppError ("Product already created", 409)
     }
 
-    const products = productsRepository.create({ name, price, description, image, quantity})
+    const products = productsRepository.create({ category:categoryExists,name, price, description, image, quantity})
     await productsRepository.save(products)
 
     return [201, products]
