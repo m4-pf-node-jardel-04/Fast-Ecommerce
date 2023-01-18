@@ -1,9 +1,11 @@
 
 import { ICategoryRequest } from "../../interfaces/category.interfaces";
 import { IProductsRequest } from "../../interfaces/product.interfaces";
-
+import {
+  ICreateProductToRequest,
+  IUpdateProductToRequest,
+} from "../../interfaces/requests.interfaces";
 import { IAddressRequest, IAddress } from "../../interfaces/address.interfaces";
-
 import { IUserLogin, IUserRequest } from "../../interfaces/user.interfaces";
 
 export const mockedUser: IUserRequest = {
@@ -68,6 +70,24 @@ export const mockedCategory: ICategoryRequest = {
 
 export const mockedEditCategory: ICategoryRequest = {
   name: "automobiles",
+};
+
+export const mockedProduct1: IProductsRequest = {
+  name: "Nintendo Switch",
+  image: "imagem do produto",
+  description: "Nintendo Switch Neon V2",
+  price: 1999.99,
+  quantity: 50,
+  categoryId: "",
+};
+
+export const mockedProductToRequest1: ICreateProductToRequest = {
+  productId: "",
+  quantity: 2,
+};
+
+export const mockedUpdateProductToRequest: IUpdateProductToRequest = {
+  quantity: 4,
 };
 
 export const mockedProduct : IProductsRequest = {

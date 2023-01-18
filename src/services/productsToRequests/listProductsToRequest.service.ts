@@ -15,7 +15,7 @@ const listProductsToRequestService = async (
     .getOne();
 
   if (request.user.id !== userId) {
-    throw new AppError("Invalid request id", 400);
+    throw new AppError("The request does not belong to user", 400);
   }
 
   const productsToRequest = await requestsRepository
