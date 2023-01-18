@@ -5,7 +5,11 @@ import {
   IUpdateProductToRequest,
   IUpdateRequest,
 } from "../../interfaces/requests.interfaces";
-import { IAddressRequest, IAddress } from "../../interfaces/address.interfaces";
+import {
+  IAddressRequest,
+  IAddress,
+  IAddressUpdate,
+} from "../../interfaces/address.interfaces";
 import { IUserLogin, IUserRequest } from "../../interfaces/user.interfaces";
 
 export const mockedUser: IUserRequest = {
@@ -51,6 +55,16 @@ export const mockedAddressRequest: IAddressRequest = {
   number: 10655,
   complement: "Casa 19",
   city: "Luís Correia",
+  state: "PI",
+};
+
+export const mockedUpdateAddress: IAddressUpdate = {
+  nickname: "Casa Editada",
+  district: "Rua Editada",
+  zipCode: "64220001",
+  number: 10655,
+  complement: "Casa 19",
+  city: "Cidade Editada",
   state: "PI",
 };
 

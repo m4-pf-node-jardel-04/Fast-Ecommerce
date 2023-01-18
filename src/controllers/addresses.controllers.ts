@@ -39,7 +39,7 @@ const updateAddressController = async (req: Request, res: Response) => {
   const addressId = req.params.id;
   const updateAddress = await updateAddressService(addressData, addressId);
 
-  return res.status(201).json(updateAddress);
+  return res.status(200).json(updateAddress);
 };
 
 export {
