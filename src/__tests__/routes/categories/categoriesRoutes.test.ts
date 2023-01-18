@@ -2,7 +2,7 @@ import { DataSource } from "typeorm";
 import AppDataSource from "../../../data-source";
 import request from "supertest"
 import app from "../../../app";
-import { mockedAdminLogin, mockedCategory, mockedEditCategory, mockedUser } from "../../mocks";
+import { mockedAdmin, mockedAdminLogin, mockedCategory, mockedEditCategory, mockedUser, mockedUserLogin } from "../../mocks";
 
 describe("/categories", ()=>{
     let connection: DataSource
@@ -15,7 +15,7 @@ describe("/categories", ()=>{
         })
 
         await request(app).post("/users").send(mockedUser)
-        await request(app).post("/users").send(mockedUser)
+        await request(app).post("/users").send(mockedAdmin)
     })
 
     afterAll(async() => {
@@ -23,8 +23,8 @@ describe("/categories", ()=>{
     })
 
     test("POST /categories - Must be able to create category.", async() => {
-        const tokenAdmin = await request(app).post("/login").send(mockedAdminLogin)
-        const res = await request(app).post("/categories").set("Authorization", `Bearer ${tokenAdmin.body.token}`).send( mockedCategory)
+        const tokenAdmin = await request(app).post("/users/login").send(mockedAdminLogin)
+        const res = await request(app).post("/categories").set("Authorization", `Bearer ${tokenAdmin.body.token}`).send(mockedCategory)
 
         expect(res.body).toHaveProperty("id")
         expect(res.body).toHaveProperty("name")
@@ -32,14 +32,14 @@ describe("/categories", ()=>{
     })
 
     test("POST /categories - User should not be able to create category without authentication.", async() => {
-        const res = await request(app).post("/categories").send( mockedCategory)
+        const res = await request(app).post("/categories").send(mockedCategory)
 
         expect(res.body).toHaveProperty("message")
         expect(res.status).toBe(401)
     })
 
     test("POST /categories - Should not be able to create category not being admin.", async() => {
-        const tokenUser = await request(app).post("/login").send(mockedUser)
+        const tokenUser = await request(app).post("/users/login").send(mockedUser)
         const res = await request(app).post("/categories").set("Authorization", `Bearer ${tokenUser.body.token}`).send( mockedCategory)
 
         expect(res.body).toHaveProperty("message")
@@ -76,13 +76,15 @@ describe("/categories", ()=>{
     
 
     test("PATCH /categories/:id - Must be able to edit a category name", async() => {
-        const tokenAdmin = await request(app).post("/login").send(mockedAdminLogin)
+        const tokenAdmin = await request(app).post("/users/login").send(mockedAdminLogin)
         const categoryToUpdade = await request(app).get("/categories")
-        const res = await request(app).patch(`/categories/${categoryToUpdade.body[0].id}`).set("Authorization", `Bearer ${tokenAdmin.body.token}`).send(mockedEditCategory)
 
-        expect(res.body).toHaveProperty("id")
-        expect(res.body[0].name).toEqual("automobiles")
+        const res = await request(app).patch(`/categories/${categoryToUpdade.body[0].id}`).set("Authorization", `Bearer ${tokenAdmin.body.token}`).send(mockedEditCategory)
+        const categoryUpdate = await request(app).get("/categories")
+
         expect(res.status).toBe(204)
+        expect(categoryUpdate.body[0].name).toEqual("automobiles")
+
     })
 
     test("PATCH /categories/:id - The user must not be able to edit the category without authentication.", async() => {
@@ -94,11 +96,45 @@ describe("/categories", ()=>{
     })
 
     test("PATCH /categories/:id - Must not be able to edit category not being admin.", async() => {
-        const tokenUser = await request(app).post("/login").send(mockedUser)
+        const tokenUser = await request(app).post("/users/login").send(mockedUser)
         const categoryToUpdade = await request(app).get("/categories")
         const res = await request(app).patch(`/categories/${categoryToUpdade.body[0].id}`).set("Authorization", `Bearer ${tokenUser.body.token}`).send(mockedEditCategory)
 
         expect(res.body).toHaveProperty("message")
         expect(res.status).toBe(403)
     })
+
+
+    test("DELETE /categories/:id -  The user must not be able to delete the category without authentication.",async () => {
+
+        const categoryToUpdade = await request(app).get("/categories")
+
+        const res = await request(app).delete(`/categories/${categoryToUpdade.body[0].id}`)
+        
+        expect(res.body).toHaveProperty("message")
+        expect(res.status).toBe(401)
+     
+    })
+
+    test("DELETE /categories/:id -  Must not be able to delete category not being admin.",async () => {
+        const tokenuser = await request(app).post("/users/login").send(mockedUser)
+        const category = await request(app).get("/categories")
+
+        const res = await request(app).delete(`/categories/${category.body[0].id}`).set("Authorization", `Bearer ${tokenuser.body.token}`);
+        
+        expect(res.body).toHaveProperty("message")
+        expect(res.status).toBe(403)
+     
+    })
+
+    test("DELETE /categories/:id -  User should not be able to delete non-existent category.",async () => {
+        const tokenAdmin = await request(app).post("/users/login").send(mockedAdmin)
+
+        const res = await request(app).delete("/categories/33f14b7d-e020-4ba0-a05c-d10588934ddf}").set("Authorization", `Bearer ${tokenAdmin.body.token}`);
+        
+        expect(res.status).toBe(404)
+     
+    })
+    
+    
 })

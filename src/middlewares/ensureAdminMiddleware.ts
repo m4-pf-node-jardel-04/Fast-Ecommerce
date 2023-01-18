@@ -14,7 +14,6 @@ const ensureAdminMiddleare = async (
   const user = await userRepository.findOneBy({ id: userId });
 
   if (!user.isAdm) {
-    console.log(user.isAdm);
     res.status(403).json({ message: "Access denied , only admin actored." });
   }
 
