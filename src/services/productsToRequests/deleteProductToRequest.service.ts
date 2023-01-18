@@ -21,11 +21,11 @@ const deleteProductToRequestService = async (
 
   if (request.user.id !== userId) {
     throw new AppError("The request does not belong to user", 400);
-  }
+  };
 
   if (request.status !== "em aberto") {
     throw new AppError("The request has been already finalized", 400);
-  }
+  };
 
   const findProduct = await productsToRequestsRepository
     .createQueryBuilder("productToRequest")
@@ -37,7 +37,7 @@ const deleteProductToRequestService = async (
 
   if (!findProduct) {
     throw new AppError("Product not found on request", 404);
-  }
+  };
 
   const product = await productRepository.findOneBy({ id: productId });
 

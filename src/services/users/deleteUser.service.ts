@@ -10,11 +10,11 @@ const deleteUserService = async (userId: string, userAuth: string) => {
 
   if (!foundUserByParam) {
     throw new AppError("User not found. Informed id is incorrect.", 404);
-  }
+  };
 
   if (foundUserByParam.isActive === false) {
     throw new AppError("User already deleted.", 400);
-  }
+  };
 
   if (foundUserByAuth.isAdm === false) {
     if (foundUserByAuth.id !== foundUserByParam.id) {
@@ -23,10 +23,10 @@ const deleteUserService = async (userId: string, userAuth: string) => {
         403
       );
     }
-  }
+  };
 
-  foundUserByParam.isActive = false
-  await userRepository.save(foundUserByParam)
+  foundUserByParam.isActive = false;
+  await userRepository.save(foundUserByParam);
 
   return { foundUserByParam };
 };

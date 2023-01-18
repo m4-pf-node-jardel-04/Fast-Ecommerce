@@ -2,7 +2,7 @@ import { IUserWithNameAndId } from "./user.interfaces";
 
 export interface IUpdateRequest {
   status: string;
-}
+};
 
 export interface ICreateRequestResponse {
   id: string;
@@ -11,7 +11,7 @@ export interface ICreateRequestResponse {
   totalValue: number;
   status: string;
   user: IUserWithNameAndId;
-}
+};
 
 export interface IListRequestResponse {
   id: string;
@@ -21,22 +21,22 @@ export interface IListRequestResponse {
   status: string;
   user: IUserWithNameAndId;
   productTorequest: Array<ICreateProductToRequest>;
-}
+};
 
 export interface ICreateProductToRequest {
   productId: string;
   quantity: number;
   value?: number;
   productName?: string;
-}
+};
 
 export interface ICreateProductToRequestResponse {
   quantity: number;
   value: number;
   productName: string;
-}
+};
 
 export interface IUpdateProductToRequest {
   quantity: number;
   value?: number;
-}
+};

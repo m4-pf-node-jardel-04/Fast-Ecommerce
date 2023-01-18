@@ -17,7 +17,7 @@ const listRequestByIdService = async (userId: string, requestId: string) => {
 
   if (!user.isAdm && request.user.id !== user.id) {
     throw new AppError("Invalid request", 400);
-  }
+  };
 
   const requestReturn = await listRequestByIdResponseSerializer.validate(
     request,

@@ -1,10 +1,10 @@
 export interface IUserRequest {
 
-    name: string
-    email: string
-    password: string
-    isAdm?: boolean;
-}
+  name: string
+  email: string
+  password: string
+  isAdm?: boolean;
+};
 
 export interface IUserResponse {
   id: string;
@@ -14,7 +14,7 @@ export interface IUserResponse {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 export interface IUserResponseDelete {
   id: string;
@@ -24,8 +24,7 @@ export interface IUserResponseDelete {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-  // deletedAt: Date;
-}
+};
 
 export interface IUserSave {
   id: string;
@@ -33,20 +32,20 @@ export interface IUserSave {
   email: string;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 export interface IUserLogin {
   email: string;
   password: string;
-}
+};
 
 export interface IUserUpdateRequest {
   name?: string;
   email?: string;
   password?: string;
-}
+};
 
 export interface IUserWithNameAndId {
   name: string;
   id: string;
-}
+};

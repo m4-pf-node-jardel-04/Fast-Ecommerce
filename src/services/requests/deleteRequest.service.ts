@@ -11,15 +11,16 @@ const deleteRequestService = async (userId: string, requestId: string) => {
     where: { id: requestId },
     relations: { user: true, productTorequest: true },
   });
+
   const user = await userRepository.findOneBy({ id: userId });
 
   if (request.status !== "em aberto") {
     throw new AppError("The request has been already finalized", 400);
-  }
+  };
 
   if (!user.isAdm && request.user.id !== user.id) {
     throw new AppError("The request does not belong to user", 400);
-  }
+  };
 
   const deletedRequest = await requestRepository.delete({ id: request.id });
 

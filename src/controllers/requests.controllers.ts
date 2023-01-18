@@ -9,6 +9,7 @@ import updateRequestService from "../services/requests/updateRequest.service";
 const createRequestController = async (req: Request, res: Response) => {
   const userId: string = req.user.id;
   const request = await createRequestService(userId);
+  
   return res.status(201).json(request);
 };
 
@@ -16,11 +17,13 @@ const listRequestByIdController = async (req: Request, res: Response) => {
   const userId: string = req.user.id;
   const requestId: string = req.params.id;
   const request = await listRequestByIdService(userId, requestId);
+
   return res.json(request);
 };
 
 const listAllRequestsController = async (req: Request, res: Response) => {
   const requests = await listAllRequestsService();
+
   return res.json(requests);
 };
 
@@ -33,6 +36,7 @@ const updateRequestController = async (req: Request, res: Response) => {
     requestId,
     updatedData
   );
+
   return res.json(updatedRequest);
 };
 
@@ -40,6 +44,7 @@ const deleteRequestController = async (req: Request, res: Response) => {
   const userId: string = req.user.id;
   const requestId: string = req.params.id;
   const request = await deleteRequestService(userId, requestId);
+
   return res.status(204).json(request);
 };
 

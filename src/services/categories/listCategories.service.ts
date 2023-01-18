@@ -1,7 +1,7 @@
 import Category from "../../entities/categories.entity";
 import AppDataSource from "../../data-source";
 import { allcategoryResponseSerializer } from "../../serializers/category.serializers";
-import { ICategoryResponse } from "../../interfaces/category.interfaces"
+import { ICategoryResponse } from "../../interfaces/category.interfaces";
 
 const listCategoriesService = async(): Promise<Array<ICategoryResponse>> => {
     const categoryRepository = AppDataSource.getRepository(Category);

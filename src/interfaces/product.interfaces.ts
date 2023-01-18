@@ -5,7 +5,7 @@ export interface IProductsRequest {
   image: string;
   quantity: number;
   categoryId: string;
-}
+};
 
 export interface IProductsUpdate {
   name: string;
@@ -13,7 +13,7 @@ export interface IProductsUpdate {
   description: string;
   image: string;
   quantity: number;
-}
+};
 
 export interface IProductsResponse {
   name: string;
@@ -22,4 +22,4 @@ export interface IProductsResponse {
   description: string;
   image: string;
   quantity: number;
-}
+};

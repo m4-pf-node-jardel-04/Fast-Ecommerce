@@ -1,6 +1,3 @@
-import User from "../entities/user.entity";
-import { IUserWithNameAndId } from "./user.interfaces";
-
 export interface IAddressRequest {
   nickname: string;
   district: string;
@@ -9,7 +6,7 @@ export interface IAddressRequest {
   complement?: string;
   city: string;
   state: string;
-}
+};
 
 export interface IAddress {
   id: string;
@@ -20,7 +17,7 @@ export interface IAddress {
   complement?: string;
   city: string;
   state: string;
-}
+};
 
 export interface IAddressUpdate {
   nickname?: string;
@@ -30,4 +27,4 @@ export interface IAddressUpdate {
   complement?: string;
   city?: string;
   state?: string;
-}
+};

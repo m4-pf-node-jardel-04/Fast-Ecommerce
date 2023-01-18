@@ -1,19 +1,19 @@
 import { IUserResponse } from '../../interfaces/user.interfaces';
-import AppDataSource from '../../data-source'
+import AppDataSource from '../../data-source';
 import User from '../../entities/user.entity';
 import { userResponseSerializerArray } from '../../serializers/user.serializers';
 
 const listUsersService = async (): Promise<IUserResponse[]> => {
 
-  const userRepository = AppDataSource.getRepository(User)
+  const userRepository = AppDataSource.getRepository(User);
 
-  const users = await userRepository.find()
+  const users = await userRepository.find();
 
   const userResponseArray = userResponseSerializerArray.validate(users, {
     stripUnknown: true,
   });
 
-  return userResponseArray
-}  
+  return userResponseArray;
+}  ;
 
-export default listUsersService
+export default listUsersService;

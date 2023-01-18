@@ -13,8 +13,7 @@ const createProductToRequestService = async (
 ) => {
   const requestsRepository = AppDataSource.getRepository(Request);
   const productsRepository = AppDataSource.getRepository(Product);
-  const productsToRequestsRepository =
-    AppDataSource.getRepository(ProductToRequest);
+  const productsToRequestsRepository = AppDataSource.getRepository(ProductToRequest);
 
   const request = await requestsRepository
     .createQueryBuilder("request")
@@ -24,11 +23,11 @@ const createProductToRequestService = async (
 
   if (request.user.id !== userId) {
     throw new AppError("The request does not belong to user", 400);
-  }
+  };
 
   if (request.status !== "em aberto") {
     throw new AppError("The request has been already finalized", 400);
-  }
+  };
 
   const product = await productsRepository.findOneBy({
     id: productData.productId,
@@ -36,7 +35,7 @@ const createProductToRequestService = async (
 
   if (!product) {
     throw new AppError("Product not found", 404);
-  }
+  };
 
   const findProductInRequest = await productsToRequestsRepository
     .createQueryBuilder("productToRequest")
@@ -51,11 +50,11 @@ const createProductToRequestService = async (
       "Product already added to request, please update the quantity",
       409
     );
-  }
+  };
 
   if (productData.quantity > product.quantity) {
     throw new AppError("insufficient product stock", 409);
-  }
+  };
 
   productData.value = productData.quantity * product.price;
   productData.productName = product.name;
@@ -65,6 +64,7 @@ const createProductToRequestService = async (
     request: request,
     product: product,
   });
+  
   await productsToRequestsRepository.save(productToRequest);
 
   await productsRepository.update(
