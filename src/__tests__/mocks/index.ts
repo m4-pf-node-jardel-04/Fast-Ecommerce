@@ -1,9 +1,9 @@
-
 import { ICategoryRequest } from "../../interfaces/category.interfaces";
 import { IProductsRequest } from "../../interfaces/product.interfaces";
 import {
   ICreateProductToRequest,
   IUpdateProductToRequest,
+  IUpdateRequest,
 } from "../../interfaces/requests.interfaces";
 import { IAddressRequest, IAddress } from "../../interfaces/address.interfaces";
 import { IUserLogin, IUserRequest } from "../../interfaces/user.interfaces";
@@ -90,20 +90,24 @@ export const mockedUpdateProductToRequest: IUpdateProductToRequest = {
   quantity: 4,
 };
 
-export const mockedProduct : IProductsRequest = {
-    name: "Lucas",
-    price: 1000,
-    description: "Muito legal, compre",
-    image: "Minha Imagem",
-    quantity: 2,
-    categoryId: ""
-}
+export const mockedProduct: IProductsRequest = {
+  name: "Lucas",
+  price: 1000,
+  description: "Muito legal, compre",
+  image: "Minha Imagem",
+  quantity: 2,
+  categoryId: "",
+};
 
-export const mockedProductUpdate : IProductsRequest = {
-    name: "Arrascaeta",
-    price: 1001,
-    description: "Melhor impossivel",
-    image: "Minha Imagem",
-    quantity: 2,
-    categoryId: ""
-}
+export const mockedProductUpdate: IProductsRequest = {
+  name: "Arrascaeta",
+  price: 1001,
+  description: "Melhor impossivel",
+  image: "Minha Imagem",
+  quantity: 2,
+  categoryId: "",
+};
+
+export const mockedUpdateRequest: IUpdateRequest = {
+  status: "finalizado",
+};
