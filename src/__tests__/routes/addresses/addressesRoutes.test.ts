@@ -2,11 +2,13 @@ import dataSource from "../../../data-source";
 import { DataSource } from "typeorm";
 import request from "supertest";
 import app from "../../../app";
+import Address from "../../../entities/addresses.entity";
 import {
   mockedAddressRequest,
   mockedAddressResponse,
   mockedAdmin,
   mockedAdminLogin,
+  mockedUpdateAddress,
   mockedUser,
   mockedUser2,
   mockedUserLogin,
@@ -24,6 +26,12 @@ describe("/addresses", () => {
       .catch((err) => console.error(err));
 
     await request(app).post("/users").send(mockedAdmin);
+  });
+
+  beforeEach(async () => {
+    const addressRepository = dataSource.getRepository(Address);
+    const addresses = await addressRepository.find();
+    await addressRepository.remove(addresses);
   });
 
   afterAll(async () => {
@@ -61,6 +69,12 @@ describe("/addresses", () => {
     const tokenUser = await request(app)
       .post("/users/login")
       .send(mockedUserLogin);
+
+    await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`)
+      .send(mockedAddressRequest);
+
     const response = await request(app)
       .post(baseUrl)
       .set("Authorization", `Bearer ${tokenUser.body.token}`)
@@ -74,6 +88,11 @@ describe("/addresses", () => {
     const tokenAdmin = await request(app)
       .post("/users/login")
       .send(mockedAdminLogin);
+
+    await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenAdmin.body.token}`)
+      .send(mockedAddressRequest);
     const response = await request(app)
       .get(baseUrl)
       .set("Authorization", `Bearer ${tokenAdmin.body.token}`);
@@ -127,6 +146,46 @@ describe("/addresses", () => {
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
   });
+  test("PATCH /addresses/:id - Must be able to update own address", async () => {
+    await request(app).post("/users").send(mockedUser2);
+    const tokenUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin2);
+
+    const createAddress = await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`)
+      .send(mockedAddressRequest);
+
+    const response = await request(app)
+      .patch(`${baseUrl}/${createAddress.body.id}`)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`)
+      .send(mockedUpdateAddress);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(
+      expect.objectContaining({ id: expect.any(String) })
+    );
+  });
+
+  test("PATCH /addresses/:id - Must be able to update own address", async () => {
+    await request(app).post("/users").send(mockedUser2);
+    const tokenUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin2);
+
+    const createAddress = await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser.body.token}`)
+      .send(mockedAddressRequest);
+
+    const response = await request(app)
+      .patch(`${baseUrl}/${createAddress.body.id}`)
+      .send(mockedUpdateAddress);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message");
+  });
 
   test("DELETE /addresses/:id -  Logged user must be able to delete own address", async () => {
     await request(app).post("/users").send(mockedUser2);
@@ -149,16 +208,21 @@ describe("/addresses", () => {
       .set("Authorization", `Bearer ${tokenAdmin.body.token}`);
 
     const response = await request(app)
-      .delete(`/addresses/${address.body[1].id}`)
+      .delete(`/addresses/${address.body[0].id}`)
       .set("Authorization", `Bearer ${tokenUser.body.token}`);
 
     expect(response.status).toBe(204);
   });
 
   test("DELETE /addresses/:id -  Not to be able delete address of another user ", async () => {
+    await request(app).post("/users").send(mockedUser);
     await request(app).post("/users").send(mockedUser2);
 
     const tokenUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const tokenUser2 = await request(app)
       .post("/users/login")
       .send(mockedUserLogin2);
 
@@ -171,13 +235,18 @@ describe("/addresses", () => {
       .set("Authorization", `Bearer ${tokenUser.body.token}`)
       .send(mockedAddressRequest);
 
+    await request(app)
+      .post(baseUrl)
+      .set("Authorization", `Bearer ${tokenUser2.body.token}`)
+      .send(mockedAddressRequest);
+
     const address = await request(app)
       .get(baseUrl)
       .set("Authorization", `Bearer ${tokenAdmin.body.token}`);
 
     const response = await request(app)
       .delete(`/addresses/${address.body[0].id}`)
-      .set("Authorization", `Bearer ${tokenUser.body.token}`);
+      .set("Authorization", `Bearer ${tokenUser2.body.token}`);
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");

@@ -1,11 +1,15 @@
-
 import { ICategoryRequest } from "../../interfaces/category.interfaces";
 import { IProductsRequest } from "../../interfaces/product.interfaces";
 import {
   ICreateProductToRequest,
   IUpdateProductToRequest,
+  IUpdateRequest,
 } from "../../interfaces/requests.interfaces";
-import { IAddressRequest, IAddress } from "../../interfaces/address.interfaces";
+import {
+  IAddressRequest,
+  IAddress,
+  IAddressUpdate,
+} from "../../interfaces/address.interfaces";
 import { IUserLogin, IUserRequest } from "../../interfaces/user.interfaces";
 
 export const mockedUser: IUserRequest = {
@@ -54,6 +58,16 @@ export const mockedAddressRequest: IAddressRequest = {
   state: "PI",
 };
 
+export const mockedUpdateAddress: IAddressUpdate = {
+  nickname: "Casa Editada",
+  district: "Rua Editada",
+  zipCode: "64220001",
+  number: 10655,
+  complement: "Casa 19",
+  city: "Cidade Editada",
+  state: "PI",
+};
+
 export const mockedAddressResponse: Omit<IAddress, "id"> = {
   nickname: "Casa de Praia",
   district: "Rua Sem Nome",
@@ -90,20 +104,24 @@ export const mockedUpdateProductToRequest: IUpdateProductToRequest = {
   quantity: 4,
 };
 
-export const mockedProduct : IProductsRequest = {
-    name: "Lucas",
-    price: 1000,
-    description: "Muito legal, compre",
-    image: "Minha Imagem",
-    quantity: 2,
-    categoryId: ""
-}
+export const mockedProduct: IProductsRequest = {
+  name: "Lucas",
+  price: 1000,
+  description: "Muito legal, compre",
+  image: "Minha Imagem",
+  quantity: 2,
+  categoryId: "",
+};
 
-export const mockedProductUpdate : IProductsRequest = {
-    name: "Arrascaeta",
-    price: 1001,
-    description: "Melhor impossivel",
-    image: "Minha Imagem",
-    quantity: 2,
-    categoryId: ""
-}
+export const mockedProductUpdate: IProductsRequest = {
+  name: "Arrascaeta",
+  price: 1001,
+  description: "Melhor impossivel",
+  image: "Minha Imagem",
+  quantity: 2,
+  categoryId: "",
+};
+
+export const mockedUpdateRequest: IUpdateRequest = {
+  status: "finalizado",
+};
