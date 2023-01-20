@@ -27,6 +27,7 @@ Foram utilizadas no projeto as seguintes tecnologias:
 - TypeScript
 - PostgreSQL
 - TypeORM
+- Jest
 - Yup
 - Bcrypt
 - JsonWebToken
